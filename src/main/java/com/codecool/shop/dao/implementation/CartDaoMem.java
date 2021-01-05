@@ -3,6 +3,7 @@ package com.codecool.shop.dao.implementation;
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.model.User;
 import com.codecool.shop.model.cart.Cart;
+import com.codecool.shop.model.cart.CartStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +25,10 @@ public class CartDaoMem implements CartDao {
 
     @Override
     public void add(Cart cart) {
-        cart.setId(data.size() + 1);
-        data.add(cart);
+        if (cart.getId() == -1) {
+            cart.setId(data.size() + 1);
+            data.add(cart);
+        }
     }
 
     @Override
@@ -41,5 +44,21 @@ public class CartDaoMem implements CartDao {
     @Override
     public List<Cart> getBy(User user) {
         return data.stream().filter(t -> t.getUser().equals(user)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Cart getActiveCartForUser(User user) {
+
+        List<Cart> cartsForUser = this.getBy(user);
+
+        if (cartsForUser.size() != 0) {
+            for (Cart cart: cartsForUser) {
+                if (cart.getStatus().equals(CartStatus.ACTIVE)) {
+                    return cart;
+                }
+            }
+        }
+
+        return new Cart(user);
     }
 }

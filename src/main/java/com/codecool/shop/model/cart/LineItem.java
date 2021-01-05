@@ -14,6 +14,7 @@ public class LineItem {
     private Cart cart;
 
     public LineItem(Product product, Cart cart) {
+        this.id = -1;
         this.product = product;
         this.unitPrice = product.getDefaultPrice();
         this.currency = product.getDefaultCurrency();
