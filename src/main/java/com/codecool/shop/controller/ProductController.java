@@ -37,31 +37,37 @@ public class ProductController extends HttpServlet {
 
         //read from form
         String cattegoryId = req.getParameter("category-id");
-//        String supplierId = req.getParameter("supplier-id");
+        String supplierId = req.getParameter("supplier-id");
         int selectedCat = 0;
+        int selectedSupl = 0;
 
         if(cattegoryId != null)
             selectedCat = Integer.parseInt(cattegoryId);
+        if(supplierId != null)
+            selectedSupl = Integer.parseInt(supplierId);
 
 //        context.setVariable("category", productCategoryDataStore.find(4));
 //        context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(4)));
 //        context.setVariable("user", userDataStore.find(1));
 
 
-
          // Alternative setting of the template context
         Map<String, Object> params = new HashMap<>();
 
         //== Case List All ==
-        if( cattegoryId == null || selectedCat == 0){
+        if( (cattegoryId == null && supplierId == null) || (selectedCat == 0 && selectedSupl == 0)) {
             params.put("category", "All");
             params.put("products", productDataStore.getAll());
         }
+        else if (selectedSupl == 0) {
+            params.put("products", productDataStore.getBy(productCategoryDataStore.find(selectedCat)));
+        }
+        else if (selectedCat == 0)  {
+            params.put("products", productDataStore.getBy(supplierDao.find(selectedSupl)));
+        }
         else{
             params.put("category", productCategoryDataStore.find(selectedCat).getName());
-
-//            params.put("products", productDataStore.getBy(productCategoryDataStore.find(selectedCat)));
-            params.put("products", productDataStore.getBy(productCategoryDataStore.find(selectedCat), supplierDao.find(3)));
+            params.put("products", productDataStore.getBy(productCategoryDataStore.find(selectedCat), supplierDao.find(selectedSupl)));
 
         }
 

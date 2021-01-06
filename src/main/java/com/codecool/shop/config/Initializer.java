@@ -53,8 +53,11 @@ public class Initializer implements ServletContextListener {
                 "Textured matte glass back and\n" +
                 "stainless steel design", smartphone, apple));
         productDataStore.add(new Product("Samsung 65-inch Class QLED Q800T Series - Real 8K Resolution", 3899, "USD", "This bundle includes the Samsung 65-inch Class QLED Q800T Series Smart TV with Alexa Built-In and the Amazon Smart Plug.", tv, samsung));
-        productDataStore.add(new Product("Galaxy Tab", 270, "USD", "Samsung Tablet", tablet, samsung));
+        productDataStore.add(new Product("Samsung Galaxy Note 20", 470, "USD", "The Dynamic AMOLED 2X Infinity-O Display on Galaxy Note20 Ultra 5G delivers 1500 nits for a colorful, glare-free view, even in bright daylight.1 And it reduces blue light significantly to lessen eye strain.\n" +
+                "\n", smartphone, samsung));
         productDataStore.add(new Product("iPad Pro", 800, "USD", "Apple tablet", tablet, apple));
+        productDataStore.add(new Product("MacBook Pro", 1500, "USD", "Apple M1 Chip with 8-Core CPU and 8-Core GPU\n" +
+                "512GB Storage", laptop, apple));
 
 
 
