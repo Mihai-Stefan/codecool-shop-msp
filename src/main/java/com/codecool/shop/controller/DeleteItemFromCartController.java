@@ -14,19 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/update-quantity"})
+@WebServlet(urlPatterns = {"/delete-item"})
 
-public class UpdateQuantityInCartController extends HttpServlet {
+public class DeleteItemFromCartController extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        // Question for Julie: Where should data validation be done?
-
-        String newQuantity = req.getParameter("new-quantity");
-        String lineItemId = req.getParameter("item-id");
-
-
+        String itemId = req.getParameter("item-id");
 
         CartDao cartDataStore = CartDaoMem.getInstance();
         UserDao userDataStore = UserDaoMem.getInstance();
@@ -34,10 +29,9 @@ public class UpdateQuantityInCartController extends HttpServlet {
         User user = userDataStore.find(1);
         Cart cart = cartDataStore.getActiveCartForUser(user);
 
-        try{
-
-            cart.updateItem(Integer.parseInt(lineItemId), Integer.parseInt(newQuantity));
-        } catch (NumberFormatException ignored) {}
+        try {
+            cart.removeFromCart(Integer.parseInt(itemId));
+        } catch (NumberFormatException ignored){}
 
         resp.sendRedirect(req.getContextPath() + "/review-cart");
     }

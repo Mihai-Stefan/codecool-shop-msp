@@ -53,10 +53,12 @@
         <div class="col-md-1 mt-2" th:text="${item.getQuantity()} * ${item.getUnitPrice()} + ' ' + ${item.getProduct().getDefaultCurrency()}">
         </div>
         <div class="col-md-1">
-
-            <a th:attr="href='/delete-item?itemId=' + ${item.getId()}" class="btn btn-outline-danger">
-                <i class="glyphicon glyphicon-trash"></i>
-            </a>
+            <form action="delete-item" method="POST">
+                <input type="hidden" name="item-id" th:attr="value=${item.getId()}">
+                <button type="submit" class="btn btn-outline-danger">
+                    <i class="glyphicon glyphicon-trash"></i>
+                </button>
+            </form>
         </div>
     </div>
 </div>

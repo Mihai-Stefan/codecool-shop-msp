@@ -54,6 +54,10 @@ public class LineItem {
         this.unitPrice = unitPrice;
     }
 
+    public String getPrice() {
+        return ((this.quantity * this.unitPrice) + " " + this.currency);
+    }
+
     public Cart getCart() {
         return cart;
     }

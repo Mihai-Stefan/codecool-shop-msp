@@ -113,6 +113,7 @@ public class Cart {
         for (LineItem item: this.items) {
             if (item.getId() == itemId) {
                 this.items.remove(item);
+                this.numberOfItems -= item.getQuantity();
                 break;
             }
         }
