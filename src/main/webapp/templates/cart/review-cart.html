@@ -9,41 +9,69 @@
 
     <!-- Bootstrap components -->
     <!-- Latest compiled and minified Jquery -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
     <!--Latest compiled and minified Popper -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
             integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+    <script src="http://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
             integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 
     <!-- Latest compiled and minified CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+    <link href="http://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- End of Bootstrap components -->
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
 </head>
 <body>
 
 <div th:replace="navbar.html :: copy"></div>
 
-<div class = "container mt-2" th:each="item,iterStat : ${cart.getItems()}">
-    <div class="row">
+<!--<div class = "vertical-center">-->
+
+<div class = "container mt-5" th:each="item,iterStat : ${cart.getItems()}">
+    <div class="row border-bottom border-light p-2">
         <div class="col-md-3">
-            <img class="" width="200" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${item.getProduct().getId()} + '.jpg'" alt="" />
+            <img class="" width="150" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${item.getProduct().getId()} + '.jpg'" alt="" />
         </div>
-        <div class="col-md-5" th:text="${item.getProduct().getName()}"></div>
-        <div class="col-md-2" th:text="${item.getQuantity()} + 'pcs'"></div>
-        <div class="col-md-2" th:text="${item.getQuantity()} * ${item.getUnitPrice()} "></div>
+        <div class="col-md-5 mt-2" th:text="${item.getProduct().getName()}"></div>
+        <div class="col-md-2">
+            <form action="update-quantity" method="POST" class="d-flex">
+                <button type="submit" class="btn btn-outline-success mr-3">
+                    <i class="glyphicon glyphicon-refresh"></i>
+                </button>
+                <input type="number" min="1" max="10" class="form-control" name="new-quantity" th:attr="value=${item.getQuantity()}">
+                <input type="hidden" name="item-id" th:attr="value=${item.getId()}">
+                <span class="m-2">pcs</span>
+            </form>
+        </div>
+        <div class="col-md-1 mt-2" th:text="${item.getQuantity()} * ${item.getUnitPrice()} + ' ' + ${item.getProduct().getDefaultCurrency()}">
+        </div>
+        <div class="col-md-1">
+
+            <a th:attr="href='/delete-item?itemId=' + ${item.getId()}" class="btn btn-outline-danger">
+                <i class="glyphicon glyphicon-trash"></i>
+            </a>
+        </div>
     </div>
 </div>
-
-<div>
-    <p th:text="${cart.getItems().size() != 0}? 'Subtotal: ' + ${cart.getSubtotal()} + ${cart.getCurrency()} : 'Your cart is empty'"></p>
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 th:text="${cart.getItems().size() != 0}?'Subtotal: ' + ${cart.getSubtotal()} + ' ' + ${cart.getCurrency()} :'Your cart is empty'">
+            </h3>
+            <a class="btn btn-success d-flex justify-content-center mt-5"
+               th:attr="href=${cart.getItems().size() != 0}? '/checkout' : '/'"
+               th:text="${cart.getItems().size() != 0}? 'Checkout' : 'Go back to shop'"
+            >
+            </a>
+        </div>
+    </div>
 </div>
 
 <div th:replace="footer.html :: copy"></div>
