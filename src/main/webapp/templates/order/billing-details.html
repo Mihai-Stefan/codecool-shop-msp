@@ -30,23 +30,22 @@
 <body>
 <div th:replace="navbar.html :: copy"></div>
 
-<div class = "container mt-5" th:each="item,iterStat : ${cart.getItems()}">
-    <div class="row border-bottom border-light p-2">
-        <div class="col-md-3">
-            <img class="" width="150" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${item.getProduct().getId()} + '.jpg'" alt="" />
+<div class = "container mt-5 bg-light">
+    <div class="row border-bottom border-white p-2" th:each="item,iterStat : ${cart.getItems()}">
+        <div class="col-md-2 d-flex justify-content-center">
+            <img class="" width="100" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${item.getProduct().getId()} + '.jpg'" alt="" />
         </div>
-        <div class="col-md-7" th:text="${item.getProduct().getName()}"></div>
-        <div class="col-md-1">
+        <div class="col-md-7 d-flex align-items-center" th:text="${item.getProduct().getName()}"></div>
+        <div class="col-md-1 d-flex align-items-center">
             <span th:text="${item.getQuantity()}"></span>
         </div>
-        <div class="col-md-1 mt-2" th:text="${item.getQuantity()} * ${item.getUnitPrice()} + ' ' + ${item.getProduct().getDefaultCurrency()}">
+        <div class="col-md-2 d-flex justify-content-end align-items-center" th:text="${item.getPrice()}">
         </div>
     </div>
-</div>
-<div class="container mt-5 d-flex justify-content-center">
+
     <div class="row">
-        <div class="col-md-12">
-            <h3 th:text=" 'Subtotal: ' + ${cart.getSubtotal()} + ' ' + ${cart.getCurrency()}"></h3>
+        <div class="col-md-12 d-flex justify-content-end">
+            <h6 class="font-weight-bold" th:text="${cart.getItems().size() != 0}? 'Total: ' + ${cart.getSubtotal()} + ' ' + ${cart.getCurrency()}"></h6>
         </div>
     </div>
 </div>
@@ -89,7 +88,7 @@
             </div>
             <div class="mb-3">
                 <label for="address">Address</label>
-                <input type="text" class="form-control" id="address"required>
+                <input type="text" class="form-control" id="address" required>
                 <div class="invalid-feedback">
                     Please enter your shipping address.
                 </div>
@@ -165,7 +164,7 @@
             </div>
             <div class="mb-3">
                 <label for="sAddress">Address</label>
-                <input type="text" class="form-control" id="sAddress"required>
+                <input type="text" class="form-control" id="sAddress" required>
                 <div class="invalid-feedback">
                     Please enter your shipping address.
                 </div>

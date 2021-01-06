@@ -55,7 +55,8 @@ public class LineItem {
     }
 
     public String getPrice() {
-        return ((this.quantity * this.unitPrice) + " " + this.currency);
+        String price = String.format("%.02f", this.quantity * this.unitPrice);
+        return (price + " " + this.currency);
     }
 
     public Cart getCart() {
