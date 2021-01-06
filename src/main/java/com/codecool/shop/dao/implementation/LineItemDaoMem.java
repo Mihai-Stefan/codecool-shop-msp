@@ -25,8 +25,10 @@ public class LineItemDaoMem implements LineItemDao {
 
     @Override
     public void add(LineItem item) {
-        item.setId(data.size() + 1);
-        data.add(item);
+        if (item.getId() == -1) {
+            item.setId(data.size() + 1);
+            data.add(item);
+        }
     }
 
     @Override
@@ -42,5 +44,11 @@ public class LineItemDaoMem implements LineItemDao {
     @Override
     public List<LineItem> getByCart(Cart cart) {
         return data.stream().filter(t -> t.getCart().equals(cart)).collect(Collectors.toList());
+    }
+
+    @Override
+    public LineItem getByCartAndProduct(Cart cart, Product product) {
+        List<LineItem> itemsInCart = this.getByCart(cart);
+        return itemsInCart.stream().filter(t -> t.getProduct() == product).findFirst().orElse(new LineItem(product, cart));
     }
 }

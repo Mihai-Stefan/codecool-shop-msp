@@ -14,6 +14,7 @@ public class LineItem {
     private Cart cart;
 
     public LineItem(Product product, Cart cart) {
+        this.id = -1;
         this.product = product;
         this.unitPrice = product.getDefaultPrice();
         this.currency = product.getDefaultCurrency();
@@ -51,6 +52,10 @@ public class LineItem {
 
     public void setUnitPrice(float unitPrice) {
         this.unitPrice = unitPrice;
+    }
+
+    public String getPrice() {
+        return ((this.quantity * this.unitPrice) + " " + this.currency);
     }
 
     public Cart getCart() {

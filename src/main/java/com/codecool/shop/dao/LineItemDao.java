@@ -13,4 +13,13 @@ public interface LineItemDao {
     void remove(int id);
 
     List<LineItem> getByCart(Cart cart);
+
+    /**
+     * Method looks a LineItem having the product in the cart and returns it if it is found.
+     * If not found, a new LineItem is instantiated and returned.
+     * @param cart cart to look in
+     * @param product product to look for
+     * @return line item from the cart having the product
+     */
+    LineItem getByCartAndProduct(Cart cart, Product product);
 }

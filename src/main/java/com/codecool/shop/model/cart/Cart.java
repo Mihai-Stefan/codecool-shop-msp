@@ -17,6 +17,7 @@ public class Cart {
     private CartStatus status;
 
     public Cart(User user) {
+        this.id = -1;
         this.user = user;
         this.items = new ArrayList<>();
         this.numberOfItems = 0;
@@ -64,12 +65,12 @@ public class Cart {
         this.status = status;
     }
 
-    public void addToCart(Product product) {
+    public void addToCart(LineItem itemToAdd) {
 
         LineItem targetItem = null;
 
         for (LineItem item: this.items) {
-            if (item.getProduct() == product) {
+            if (item.getProduct() == itemToAdd.getProduct()) {
                 targetItem = item;
                 break;
             }
@@ -78,7 +79,7 @@ public class Cart {
         if (targetItem != null) {
             targetItem.incrementQuantity();
         } else {
-            targetItem = new LineItem(product, this);
+            targetItem = itemToAdd;
             this.items.add(targetItem);
         }
 
@@ -112,6 +113,7 @@ public class Cart {
         for (LineItem item: this.items) {
             if (item.getId() == itemId) {
                 this.items.remove(item);
+                this.numberOfItems -= item.getQuantity();
                 break;
             }
         }
