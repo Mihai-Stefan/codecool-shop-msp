@@ -1,6 +1,12 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.dao.CartDao;
+import com.codecool.shop.dao.UserDao;
+import com.codecool.shop.dao.implementation.CartDaoMem;
+import com.codecool.shop.dao.implementation.UserDaoMem;
+import com.codecool.shop.model.User;
+import com.codecool.shop.model.cart.Cart;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -11,20 +17,30 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.rmi.ServerException;
 
-@WebServlet(urlPatterns = {"/payment"})
+@WebServlet(urlPatterns = {"/payment/card"})
 
 public class PaymentController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServerException, IOException {
 
+        CartDao cartDataStorage = CartDaoMem.getInstance();
+        UserDao userDataStorage = UserDaoMem.getInstance();
+
+        User user = userDataStorage.find(1);
+        Cart cart = cartDataStorage.getActiveCartForUser(user);
+
+
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
+
+        context.setVariable("cart", cart);
 
         engine.process("order/payment.html", context, resp.getWriter());
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServerException, IOException {
+        resp.sendRedirect(req.getContextPath() + "/");
     }
 }

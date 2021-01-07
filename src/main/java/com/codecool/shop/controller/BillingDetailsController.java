@@ -71,6 +71,8 @@ public class BillingDetailsController extends HttpServlet {
         String sZipCode      = req.getParameter("sZipCode");
         String sPhoneNumber  = req.getParameter("sPhoneNumber");
 
+        String paymentMethod = req.getParameter("payment");
+
         Address billingAddress = new Address(bFirstName, bLastName, bEmail, bAddress, user, bCountry, bCity, bZipCode, bPhoneNumber);
         Address shippingAddress = new Address(sFirstName, sLastName, sEmail, sAddress, user, sCountry, sCity, sZipCode, sPhoneNumber);
 
@@ -81,6 +83,13 @@ public class BillingDetailsController extends HttpServlet {
 
         orderDataStore.add(order);
 
-        resp.sendRedirect(req.getContextPath() + "/payment");
+        if (paymentMethod.equals("pay-by-card")) {
+            resp.sendRedirect(req.getContextPath() + "/payment/card");
+        }
+
+
+        if (paymentMethod.equals("pay-by-paypall")) {
+            resp.sendRedirect(req.getContextPath() + "/payment/paypal");
+        }
     }
 }
