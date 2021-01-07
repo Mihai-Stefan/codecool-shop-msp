@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Codecool" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Secure Pay</title>
+
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="http://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+</head>
+<body>
+
+<form action="/payment/card" method="post">
+    <div class="container mt-5">
+        <div class="row m-5">
+            <div class="col-md-3"></div>
+            <div class="col-md-6 bg-light p-5">
+                <div class="row">
+                    <div class="col-md-12 d-flex justify-content-center">
+                        <img class="img-fluid" src="/static/img/secure-pay.png" alt="Secure Pay Logo">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 d-flex justify-content-center">
+                        <img class="img-fluid" src="/static/img/payment-types.png" alt="Payment Types">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label for="cc-name" class="font-weight-bold">NAME ON CARD</label>
+                        <input type="text" class="form-control" id="cc-name" required>
+                        <small class="text-muted">Full name as displayed on card</small>
+                        <div class="invalid-feedback">
+                            Name on card is required
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label for="cc-number" class="font-weight-bold">CARD NUMBER</label>
+                        <input type="text" class="form-control" id="cc-number" pattern="[0-9-]{19}" value="" required>
+                        <div class="invalid-feedback">
+                            Credit card number is required
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <label for="expireMM" class="font-weight-bold">MONTH</label>
+                        <select class="custom-select" name='expireMM' id="expireMM">
+                            <option disabled selected></option>
+                            <option value='1'>January</option>
+                            <option value='2'>February</option>
+                            <option value='3'>March</option>
+                            <option value='4'>April</option>
+                            <option value='5'>May</option>
+                            <option value='6'>June</option>
+                            <option value='7'>July</option>
+                            <option value='8'>August</option>
+                            <option value='9'>September</option>
+                            <option value='10'>October</option>
+                            <option value='11'>November</option>
+                            <option value='12'>December</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="expireYY" class="font-weight-bold">YEAR</label>
+                        <select class="custom-select" name='expireYY' id="expireYY">
+                            <option disabled selected></option>
+                            <option value='21'>2021</option>
+                            <option value='22'>2022</option>
+                            <option value='23'>2023</option>
+                            <option value='24'>2024</option>
+                            <option value='25'>2025</option>
+                            <option value='26'>2026</option>
+                            <option value='27'>2027</option>
+                            <option value='28'>2028</option>
+                            <option value='29'>2029</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="cc-cvv" class="font-weight-bold">CVV</label>
+                        <input type="text" class="form-control" id="cc-cvv"  pattern="[0-9]{3}" required>
+                        <div class="invalid-feedback">
+                            Security code required
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-lg btn-block mt-5 font-weight-bold" type="submit" th:text="'PAY ' + ${cart.getSubtotal()} + ' ' + ${cart.getCurrency()}"></button>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+</form>
+
+<script>
+    function cc_format(value) {
+        let v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
+        let matches = v.match(/\d{4,16}/g);
+        let match = matches && matches[0] || ''
+        let parts = []
+        for (i=0, len=match.length; i<len; i+=4) {
+            parts.push(match.substring(i, i+4))
+        }
+        if (parts.length) {
+            return parts.join('-')
+        } else {
+            return value
+        }
+    }
+
+    onload = function() {
+        document.getElementById('cc-number').oninput = function() {
+            this.value = cc_format(this.value)
+        }
+    }
+</script>
+</body>
+</html>

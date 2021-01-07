@@ -32,6 +32,16 @@ public class CartDaoMem implements CartDao {
     }
 
     @Override
+    public void update(Cart cart) {
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).equals(cart)) {
+                data.set(i, cart);
+                break;
+            }
+        }
+    }
+
+    @Override
     public Cart find(int id) {
         return data.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
     }

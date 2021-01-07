@@ -45,8 +45,8 @@ public class Cart {
         return numberOfItems;
     }
 
-    public float getSubtotal() {
-        return subtotal;
+    public String getSubtotal() {
+        return String.format("%.02f", this.subtotal);
     }
 
     public Currency getCurrency() {

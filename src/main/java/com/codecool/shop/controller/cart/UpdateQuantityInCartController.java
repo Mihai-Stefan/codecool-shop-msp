@@ -1,4 +1,4 @@
-package com.codecool.shop.controller;
+package com.codecool.shop.controller.cart;
 
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.UserDao;
@@ -14,14 +14,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/delete-item"})
+@WebServlet(urlPatterns = {"/update-quantity"})
 
-public class DeleteItemFromCartController extends HttpServlet {
+public class UpdateQuantityInCartController extends HttpServlet {
 
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String itemId = req.getParameter("item-id");
+        // Question for Julie: Where should data validation be done?
+
+        String newQuantity = req.getParameter("new-quantity");
+        String lineItemId = req.getParameter("item-id");
+
+
 
         CartDao cartDataStore = CartDaoMem.getInstance();
         UserDao userDataStore = UserDaoMem.getInstance();
@@ -29,9 +34,10 @@ public class DeleteItemFromCartController extends HttpServlet {
         User user = userDataStore.find(1);
         Cart cart = cartDataStore.getActiveCartForUser(user);
 
-        try {
-            cart.removeFromCart(Integer.parseInt(itemId));
-        } catch (NumberFormatException ignored){}
+        try{
+
+            cart.updateItem(Integer.parseInt(lineItemId), Integer.parseInt(newQuantity));
+        } catch (NumberFormatException ignored) {}
 
         resp.sendRedirect(req.getContextPath() + "/review-cart");
     }

@@ -5,7 +5,7 @@
     <meta name="author" content="Codecool" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <title>Your Cart</title>
+    <title>Codecool Shop</title>
 
     <!-- Bootstrap components -->
     <!-- Latest compiled and minified Jquery -->
@@ -25,22 +25,20 @@
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- End of Bootstrap components -->
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
 </head>
+
 <body>
 
 <div th:replace="navbar.html :: copy"></div>
-
-<!--<div class = "vertical-center">-->
 
 <div class = "container mt-5" th:each="item,iterStat : ${cart.getItems()}">
     <div class="row border-bottom border-light p-2">
         <div class="col-md-3">
             <img class="" width="150" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${item.getProduct().getId()} + '.jpg'" alt="" />
         </div>
-        <div class="col-md-5 mt-2" th:text="${item.getProduct().getName()}"></div>
-        <div class="col-md-2">
+        <div class="col-md-4 d-flex align-items-center" th:text="${item.getProduct().getName()}"></div>
+        <div class="col-md-2 d-flex align-items-center">
             <form action="update-quantity" method="POST" class="d-flex">
                 <button type="submit" class="btn btn-outline-success mr-3">
                     <i class="glyphicon glyphicon-refresh"></i>
@@ -50,9 +48,9 @@
                 <span class="m-2">pcs</span>
             </form>
         </div>
-        <div class="col-md-1 mt-2" th:text="${item.getQuantity()} * ${item.getUnitPrice()} + ' ' + ${item.getProduct().getDefaultCurrency()}">
+        <div class="col-md-2 d-flex justify-content-end align-items-center" th:text="${item.getPrice()}">
         </div>
-        <div class="col-md-1">
+        <div class="col-md-1 d-flex align-items-center">
             <form action="delete-item" method="POST">
                 <input type="hidden" name="item-id" th:attr="value=${item.getId()}">
                 <button type="submit" class="btn btn-outline-danger">
@@ -68,7 +66,7 @@
             <h3 th:text="${cart.getItems().size() != 0}?'Subtotal: ' + ${cart.getSubtotal()} + ' ' + ${cart.getCurrency()} :'Your cart is empty'">
             </h3>
             <a class="btn btn-success d-flex justify-content-center mt-5"
-               th:attr="href=${cart.getItems().size() != 0}? '/checkout' : '/'"
+               th:attr="href=${cart.getItems().size() != 0}? '/billing-details' : '/'"
                th:text="${cart.getItems().size() != 0}? 'Checkout' : 'Go back to shop'"
             >
             </a>
