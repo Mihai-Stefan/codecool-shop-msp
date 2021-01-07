@@ -8,8 +8,6 @@ import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
 import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.implementation.SupplierDaoMem;
-import com.codecool.shop.dao.implementation.UserDaoMem;
-import com.codecool.shop.model.Supplier;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -19,8 +17,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
@@ -28,71 +24,12 @@ public class ProductController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDao = SupplierDaoMem.getInstance();
-        UserDao userDataStore = UserDaoMem.getInstance();
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        //read from form
-        String cattegoryId = req.getParameter("category-id");
-        String supplierId = req.getParameter("supplier-id");
+        context.setVariable("products", productDataStore.getAll());
 
-
-        System.out.println("=====================================================");
-
-
-        int selectedCat = 0;
-        int selectedSupl = 0;
-
-        if(cattegoryId != null)
-            selectedCat = Integer.parseInt(cattegoryId);
-        if(supplierId != null)
-            selectedSupl = Integer.parseInt(supplierId);
-
-//        context.setVariable("category", productCategoryDataStore.find(4));
-//        context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(4)));
-//        context.setVariable("user", userDataStore.find(1));
-
-
-        // Alternative setting of the template context
-        Map<String, Object> params = new HashMap<>();
-
-        //== Case List All ==
-        if( (cattegoryId == null && supplierId == null) || (selectedCat == 0 && selectedSupl == 0)) {
-            params.put("category", "All");
-            params.put("products", productDataStore.getAll());
-        }
-        else if (selectedSupl == 0) {
-            params.put("products", productDataStore.getBy(productCategoryDataStore.find(selectedCat)));
-        }
-        else if (selectedCat == 0)  {
-            params.put("products", productDataStore.getBy(supplierDao.find(selectedSupl)));
-        }
-        else{
-            params.put("category", productCategoryDataStore.find(selectedCat).getName());
-            params.put("products", productDataStore.getBy(productCategoryDataStore.find(selectedCat), supplierDao.find(selectedSupl)));
-
-        }
-
-
-        //POST test
-//        @Override
-//        protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//
-//            engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
-//            context = new WebContext(req, resp, req.getServletContext());
-//
-//        }
-
-
-
-
-
-
-
-        context.setVariables(params);
         engine.process("product/index.html", context, resp.getWriter());
     }
 
@@ -102,72 +39,38 @@ public class ProductController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDao = SupplierDaoMem.getInstance();
-        UserDao userDataStore = UserDaoMem.getInstance();
+        SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        //read from form
-        String cattegoryId = req.getParameter("category-id");
+        String categoryId = req.getParameter("category-id");
         String supplierId = req.getParameter("supplier-id");
 
-        System.out.println("===> categoryId = " + cattegoryId); //==============================
+        System.out.println("===> categoryId = " + categoryId);
         System.out.println("===> supplierId = " + supplierId);
-
-
-
 
         int selectedCat = 0;
         int selectedSupl = 0;
 
-        if(cattegoryId != null)
-            selectedCat = Integer.parseInt(cattegoryId);
+        if(categoryId != null)
+            selectedCat = Integer.parseInt(categoryId);
         if(supplierId != null)
             selectedSupl = Integer.parseInt(supplierId);
 
-//        context.setVariable("category", productCategoryDataStore.find(4));
-//        context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(4)));
-//        context.setVariable("user", userDataStore.find(1));
-
-
-        // Alternative setting of the template context
-        Map<String, Object> params = new HashMap<>();
-
-        //== Case List All ==
-        if( (cattegoryId == null && supplierId == null) || (selectedCat == 0 && selectedSupl == 0)) {
-            params.put("category", "All");
-            params.put("products", productDataStore.getAll());
+        if(selectedCat == 0 && selectedSupl == 0) {
+            context.setVariable("products", productDataStore.getAll());
         }
         else if (selectedSupl == 0) {
-            params.put("products", productDataStore.getBy(productCategoryDataStore.find(selectedCat)));
+            context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(selectedCat)));
         }
         else if (selectedCat == 0)  {
-            params.put("products", productDataStore.getBy(supplierDao.find(selectedSupl)));
+            context.setVariable("products", productDataStore.getBy(supplierDataStore.find(selectedSupl)));
         }
         else{
-            params.put("category", productCategoryDataStore.find(selectedCat).getName());
-            params.put("products", productDataStore.getBy(productCategoryDataStore.find(selectedCat), supplierDao.find(selectedSupl)));
-
+            context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(selectedCat), supplierDataStore.find(selectedSupl)));
         }
 
-
-        //POST test
-//        @Override
-//        protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//
-//            engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
-//            context = new WebContext(req, resp, req.getServletContext());
-//
-//        }
-
-
-
-
-
-
-
-        context.setVariables(params);
         engine.process("product/index.html", context, resp.getWriter());
     }
 
