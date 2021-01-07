@@ -9,6 +9,7 @@ public interface CartDao {
 
     void add(Cart cart);
     Cart find(int id);
+    void update(Cart cart);
     void remove(int id);
 
     List<Cart> getBy(User user);

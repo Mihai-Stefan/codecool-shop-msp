@@ -1,4 +1,4 @@
-package com.codecool.shop.controller;
+package com.codecool.shop.controller.order;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.AddressDao;
@@ -88,7 +88,7 @@ public class BillingDetailsController extends HttpServlet {
         }
 
 
-        if (paymentMethod.equals("pay-by-paypall")) {
+        if (paymentMethod.equals("pay-by-paypal")) {
             resp.sendRedirect(req.getContextPath() + "/payment/paypal");
         }
     }

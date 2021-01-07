@@ -1,4 +1,4 @@
-package com.codecool.shop.controller;
+package com.codecool.shop.controller.cart;
 
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.LineItemDao;

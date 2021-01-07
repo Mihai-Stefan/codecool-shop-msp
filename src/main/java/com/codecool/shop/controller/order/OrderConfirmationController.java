@@ -1,14 +1,16 @@
-package com.codecool.shop.controller;
+package com.codecool.shop.controller.order;
+
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.CartDao;
-import com.codecool.shop.dao.LineItemDao;
+import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.dao.implementation.CartDaoMem;
-import com.codecool.shop.dao.implementation.LineItemDaoMem;
+import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.dao.implementation.UserDaoMem;
 import com.codecool.shop.model.User;
 import com.codecool.shop.model.cart.Cart;
+import com.codecool.shop.model.order.Order;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -19,20 +21,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/review-cart"})
+@WebServlet(urlPatterns = {"/order-confirmation"})
 
-public class ReviewCartController extends HttpServlet {
+public class OrderConfirmationController extends HttpServlet {
+
+
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CartDao cartDataStore = CartDaoMem.getInstance();
+
         UserDao userDataStore = UserDaoMem.getInstance();
+        OrderDao orderDataStore = OrderDaoMem.getInstance();
+        CartDao cartDataStore = CartDaoMem.getInstance();
 
         User user = userDataStore.find(1);
+        Order order = orderDataStore.getActiveOrderForUser(user);
+        Cart cart = cartDataStore.getActiveCartForUser(user);
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        context.setVariable("cart", cartDataStore.getActiveCartForUser(user));
+        context.setVariable("order", order);
+        context.setVariable("cart", cart);
 
-        engine.process("cart/review-cart.html", context, resp.getWriter());
+        engine.process("order/order-confirmation.html", context, resp.getWriter());
+
+
     }
 }
-

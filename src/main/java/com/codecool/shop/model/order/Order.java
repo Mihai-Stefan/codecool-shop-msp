@@ -12,6 +12,7 @@ public class Order {
    private OrderStatus orderStatus;
 
    public Order(Cart cart, User user, Address billingAddress, Address shippingAddress) {
+      this.id = -1;
       this.cart = cart;
       this.user = user;
       this.billingAddress = billingAddress;

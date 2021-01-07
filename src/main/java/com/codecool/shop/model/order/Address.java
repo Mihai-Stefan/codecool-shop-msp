@@ -15,6 +15,7 @@ public class Address {
     private String phoneNumber;
 
     public Address(String firstName, String lastName, String email, String address, User user, String country, String city, String zipCode, String phoneNumber) {
+        this.id = -1;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -50,8 +51,12 @@ public class Address {
         this.lastName = lastName;
     }
 
+    public String getName() {
+        return "Name: " + firstName + " " + lastName;
+    }
+
     public String getEmail() {
-        return email;
+        return "Email: " + email;
     }
 
     public void setEmail(String email) {
@@ -59,7 +64,7 @@ public class Address {
     }
 
     public String getAddress() {
-        return address;
+        return "Address: " + address + ", " + country + ", " + city + " " + zipCode;
     }
 
     public void setAddress(String address) {
@@ -91,10 +96,11 @@ public class Address {
     }
 
     public String getPhoneNumber() {
-        return phoneNumber;
+        return "PhoneNumber: " + phoneNumber;
     }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
 }
