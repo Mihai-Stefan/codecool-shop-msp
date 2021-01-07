@@ -39,30 +39,67 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Filter by Category
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/?category-id=0">All Categories</a></li>
-                            <li><a class="dropdown-item" href="/?category-id=2">Smartphone</a></li>
-                            <li><a class="dropdown-item" href="/?category-id=1">Tablet</a></li>
-                            <li><a class="dropdown-item" href="/?category-id=3">Laptop</a></li>
-                            <li><a class="dropdown-item" href="/?category-id=4">TV</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Filter by Supplier
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="/?supplier-id=0">All Suppliers</a></li>
-                            <li><a class="dropdown-item" href="?supplier-id=1">Amazon</a></li>
-                            <li><a class="dropdown-item" href="?supplier-id=3">Apple</a></li>
-                            <li><a class="dropdown-item" href="?supplier-id=2">Lenovo</a></li>
-                            <li><a class="dropdown-item" href="?supplier-id=4">Samsung</a></li>
-                        </ul>
-                    </li>
+
+                    <!--                    <li class="nav-item dropdown">-->
+                    <!--                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                    <!--                            Filter by Category-->
+                    <!--                        </a>-->
+                    <!--                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+                    <!--                            <li><a class="dropdown-item" href="/?category-id=0">All Categories</a></li>-->
+                    <!--                            <li><a class="dropdown-item" href="/?category-id=2">Smartphone</a></li>-->
+                    <!--                            <li><a class="dropdown-item" href="/?category-id=1">Tablet</a></li>-->
+                    <!--                            <li><a class="dropdown-item" href="/?category-id=3">Laptop</a></li>-->
+                    <!--                            <li><a class="dropdown-item" href="/?category-id=4">TV</a></li>-->
+                    <!--                        </ul>-->
+                    <!--                    </li>-->
+                    <!--                    <li class="nav-item dropdown">-->
+                    <!--                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                    <!--                            Filter by Supplier-->
+                    <!--                        </a>-->
+                    <!--                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+                    <!--                            <li><a class="dropdown-item" href="/?supplier-id=0">All Suppliers</a></li>-->
+                    <!--                            <li><a class="dropdown-item" href="?supplier-id=1">Amazon</a></li>-->
+                    <!--                            <li><a class="dropdown-item" href="?supplier-id=3">Apple</a></li>-->
+                    <!--                            <li><a class="dropdown-item" href="?supplier-id=2">Lenovo</a></li>-->
+                    <!--                            <li><a class="dropdown-item" href="?supplier-id=4">Samsung</a></li>-->
+                    <!--                        </ul>-->
+                    <!--                    </li>-->
+
+
+                    <!--===========================================================================-->
+                    <div class="col ">
+                        <form action="/" method="post">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <!--                                    <label for="category">Category</label>-->
+                                    <select id="category-id" class="form-control">
+                                        <option value="0">All Categories</option>
+                                        <option value="1">Tablet</option>
+                                        <option value="2">Smartphone</option>
+                                        <option value="3">Laptop</option>
+                                        <option value="4">TV</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <!--                                    <label for="supplier">Supplier</label>-->
+                                    <select id="supplier-id" class="form-control">
+                                        <option value="0">All Suppliers</option>
+                                        <option value="1">Amazon</option>
+                                        <option value="2">Lenovo</option>
+                                        <option value="3">Apple</option>
+                                        <option value="4">Samsung</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <!--===============================================================================-->
+
+
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="#">Cart</a>
                     </li>
@@ -74,7 +111,7 @@
         </div>
     </nav>
     <div class="card">
-        <strong th:text="${category}">Category Title</strong>
+        <strong th:text="${supplier}">Category Title</strong>
     </div>
 
     <div id="products" class="row">

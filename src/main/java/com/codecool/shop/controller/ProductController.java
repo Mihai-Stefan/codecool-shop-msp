@@ -1,6 +1,6 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.dao.ProductCategoryDao;
+import  com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.UserDao;
@@ -38,6 +38,11 @@ public class ProductController extends HttpServlet {
         //read from form
         String cattegoryId = req.getParameter("category-id");
         String supplierId = req.getParameter("supplier-id");
+
+
+        System.out.println("=====================================================");
+
+
         int selectedCat = 0;
         int selectedSupl = 0;
 
@@ -51,7 +56,7 @@ public class ProductController extends HttpServlet {
 //        context.setVariable("user", userDataStore.find(1));
 
 
-         // Alternative setting of the template context
+        // Alternative setting of the template context
         Map<String, Object> params = new HashMap<>();
 
         //== Case List All ==
@@ -72,9 +77,100 @@ public class ProductController extends HttpServlet {
         }
 
 
+        //POST test
+//        @Override
+//        protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//
+//            engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
+//            context = new WebContext(req, resp, req.getServletContext());
+//
+//        }
+
+
+
+
+
+
 
         context.setVariables(params);
         engine.process("product/index.html", context, resp.getWriter());
+    }
+
+
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        SupplierDao supplierDao = SupplierDaoMem.getInstance();
+        UserDao userDataStore = UserDaoMem.getInstance();
+
+        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
+        WebContext context = new WebContext(req, resp, req.getServletContext());
+
+        //read from form
+        String cattegoryId = req.getParameter("category-id");
+        String supplierId = req.getParameter("supplier-id");
+
+        System.out.println("===> categoryId = " + cattegoryId); //==============================
+        System.out.println("===> supplierId = " + supplierId);
+
+
+
+
+        int selectedCat = 0;
+        int selectedSupl = 0;
+
+        if(cattegoryId != null)
+            selectedCat = Integer.parseInt(cattegoryId);
+        if(supplierId != null)
+            selectedSupl = Integer.parseInt(supplierId);
+
+//        context.setVariable("category", productCategoryDataStore.find(4));
+//        context.setVariable("products", productDataStore.getBy(productCategoryDataStore.find(4)));
+//        context.setVariable("user", userDataStore.find(1));
+
+
+        // Alternative setting of the template context
+        Map<String, Object> params = new HashMap<>();
+
+        //== Case List All ==
+        if( (cattegoryId == null && supplierId == null) || (selectedCat == 0 && selectedSupl == 0)) {
+            params.put("category", "All");
+            params.put("products", productDataStore.getAll());
         }
+        else if (selectedSupl == 0) {
+            params.put("products", productDataStore.getBy(productCategoryDataStore.find(selectedCat)));
+        }
+        else if (selectedCat == 0)  {
+            params.put("products", productDataStore.getBy(supplierDao.find(selectedSupl)));
+        }
+        else{
+            params.put("category", productCategoryDataStore.find(selectedCat).getName());
+            params.put("products", productDataStore.getBy(productCategoryDataStore.find(selectedCat), supplierDao.find(selectedSupl)));
+
+        }
+
+
+        //POST test
+//        @Override
+//        protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//
+//            engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
+//            context = new WebContext(req, resp, req.getServletContext());
+//
+//        }
+
+
+
+
+
+
+
+        context.setVariables(params);
+        engine.process("product/index.html", context, resp.getWriter());
+    }
+
+
 
 }
