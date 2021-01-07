@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.rmi.ServerException;
 
-@WebServlet(urlPatterns = {"/payment"})
+@WebServlet(urlPatterns = {"/payment/card"})
 
 public class PaymentController extends HttpServlet {
 
@@ -26,5 +26,9 @@ public class PaymentController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServerException, IOException {
+
+
+        resp.sendRedirect(req.getContextPath() + "/order-confirmation");
+
     }
 }

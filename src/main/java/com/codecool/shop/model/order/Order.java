@@ -35,6 +35,9 @@ public class Order {
       this.cart = cart;
    }
 
+   public User getUser() {
+      return user;
+   }
    public Address getBillingAddress() {
       return billingAddress;
    }

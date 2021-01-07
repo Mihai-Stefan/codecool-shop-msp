@@ -26,65 +26,94 @@
     <!-- End of Bootstrap components -->
 
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
-
+</head>
 <body>
-<div class="container">
-    <div class="py-5 text-center">
-        <h2>Codecool Shop</h2>
-    </div>
+<!--<div th:replace="navbar.html :: copy"></div>-->
 
-    <h4 class="mb-3">Payment</h4>
+<form action="/payment/card" method="post">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 bg-light p-3">
+                <div class="row mb-3">
+                    <div class="col-md-12 d-flex align-content-center">
+                        <img class="img-fluid" src="/static/img/payment-types.png" alt="Payment Types">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label for="cc-name">Name on card</label>
+                        <input type="text" class="form-control" id="cc-name" required>
+                        <small class="text-muted">Full name as displayed on card</small>
+                        <div class="invalid-feedback">
+                            Name on card is required
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label for="cc-number">Credit card number</label>
+                        <input type="number" class="form-control" id="cc-number" pattern="[0-9]{16}" required>
+                        <div class="invalid-feedback">
+                            Credit card number is required
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5 mb-3">
+                        <label for="expireMM">Month</label>
+                        <select class="custom-select" name='expireMM' id="expireMM">
+                            <option disabled selected></option>
+                            <option value='1'>January</option>
+                            <option value='2'>February</option>
+                            <option value='3'>March</option>
+                            <option value='4'>April</option>
+                            <option value='5'>May</option>
+                            <option value='6'>June</option>
+                            <option value='7'>July</option>
+                            <option value='8'>August</option>
+                            <option value='9'>September</option>
+                            <option value='10'>October</option>
+                            <option value='11'>November</option>
+                            <option value='12'>December</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="expireYY">Year</label>
+                        <select class="custom-select" name='expireYY' id="expireYY">
+                            <option disabled selected></option>
+                            <option value='21'>2021</option>
+                            <option value='22'>2022</option>
+                            <option value='23'>2023</option>
+                            <option value='24'>2024</option>
+                            <option value='25'>2025</option>
+                            <option value='26'>2026</option>
+                            <option value='27'>2027</option>
+                            <option value='28'>2028</option>
+                            <option value='29'>2029</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label for="cc-cvv">CVV</label>
+                        <input type="text" class="form-control" id="cc-cvv"  pattern="[0-9]{3}" required>
+                        <div class="invalid-feedback">
+                            Security code required
+                        </div>
+                    </div>
+                </div>
 
-    <div class="d-block my-3">
-        <div class="custom-control custom-radio">
-            <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-            <label class="custom-control-label" for="credit">Credit card</label>
-        </div>
-        <div class="custom-control custom-radio">
-            <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
-            <label class="custom-control-label" for="debit">Debit card</label>
-        </div>
-        <div class="custom-control custom-radio">
-            <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
-            <label class="custom-control-label" for="paypal">Paypal</label>
+                <hr class="mb-4">
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+            </div>
+            <div class="col-md-4"></div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6 mb-3">
-            <label for="cc-name">Name on card</label>
-            <input type="text" class="form-control" id="cc-name" placeholder="" required>
-            <small class="text-muted">Full name as displayed on card</small>
-            <div class="invalid-feedback">
-                Name on card is required
-            </div>
-        </div>
-        <div class="col-md-6 mb-3">
-            <label for="cc-number">Credit card number</label>
-            <input type="text" class="form-control" id="cc-number" placeholder="" required>
-            <div class="invalid-feedback">
-                Credit card number is required
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3 mb-3">
-            <label for="cc-expiration">Expiration</label>
-            <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-            <div class="invalid-feedback">
-                Expiration date required
-            </div>
-        </div>
-        <div class="col-md-3 mb-3">
-            <label for="cc-expiration">CVV</label>
-            <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-            <div class="invalid-feedback">
-                Security code required
-            </div>
-        </div>
-    </div>
-    <hr class="mb-4">
-    <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+</form>
 
-</div>
+<div th:replace="footer.html :: copy"></div>
+
+<script>
+    let ccNumberField = document.getElementById('cc-number');
+</script>
 </body>
 </html>

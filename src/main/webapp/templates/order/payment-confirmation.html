@@ -27,31 +27,20 @@
 
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
 <body>
-<div th:replace="navbar.html :: copy"></div>
+<body>
+<!--<div th:replace="navbar.html :: copy"></div>-->
 
 <div class="jumbotron text-center">
-    <h2>Please fill in the payment details</h2>
+    <h2>Payment Confirmation</h2>
+</div>
+
+<div class="container">
+    <p th:text="'Your payment for the order + '${order.getId()} + 'has been registered.'"></p>
+    <p>For any additional information or changes to the order do not hesitate to contact us.</p>
+    <br>
+    <a href="/"><button class="btn btn-primary btn-success">Continue shopping</button></a>
+
 </div>
 <br>
-<div class="container mt-5">
-
-<form action="payment" method="POST">
-    <div class="col-md-6 mb-3">
-        <label for="username">Username</label>
-        <input type="text" class="form-control" id="username" name="username" aria-describedby="usernameHelp" placeholder="Enter the PayPal username">
-        <small id="usernameHelp" class="form-text text-muted">The username of your PayPal account.</small>
-    </div>
-    <div class="col-md-6 mb-3">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" name="password" aria-describedby="passwordHelp" placeholder="Enter the PayPal password">
-        <small id="passwordHelp" class="form-text text-muted">The password of your PayPal account.</small>
-    </div>
-    <button type="submit" class="btn btn-primary btn-success">Continue</button>
-
-
-
-</form>
-</div>
-
 </body>
 </html>

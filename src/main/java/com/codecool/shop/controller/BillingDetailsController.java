@@ -81,6 +81,6 @@ public class BillingDetailsController extends HttpServlet {
 
         orderDataStore.add(order);
 
-        resp.sendRedirect(req.getContextPath() + "/payment");
+        resp.sendRedirect(req.getContextPath() + "/payment/card");
     }
 }
