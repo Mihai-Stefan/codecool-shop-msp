@@ -5,7 +5,7 @@
     <meta name="author" content="Codecool" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <title>Your Cart</title>
+    <title>Codecool Shop</title>
 
     <!-- Bootstrap components -->
     <!-- Latest compiled and minified Jquery -->
@@ -25,14 +25,12 @@
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- End of Bootstrap components -->
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
 </head>
+
 <body>
 
 <div th:replace="navbar.html :: copy"></div>
-
-<!--<div class = "vertical-center">-->
 
 <div class = "container mt-5" th:each="item,iterStat : ${cart.getItems()}">
     <div class="row border-bottom border-light p-2">

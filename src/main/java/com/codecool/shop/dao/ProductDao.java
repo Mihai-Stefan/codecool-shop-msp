@@ -5,6 +5,7 @@ import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public interface ProductDao {
 
@@ -15,5 +16,7 @@ public interface ProductDao {
     List<Product> getAll();
     List<Product> getBy(Supplier supplier);
     List<Product> getBy(ProductCategory productCategory);
+    public List<Product> getBy(ProductCategory productCategory, Supplier supplier) ;
+
 
 }
