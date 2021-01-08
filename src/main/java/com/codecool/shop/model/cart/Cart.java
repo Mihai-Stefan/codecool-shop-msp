@@ -114,6 +114,7 @@ public class Cart {
             if (item.getId() == itemId) {
                 this.items.remove(item);
                 this.numberOfItems -= item.getQuantity();
+                this.subtotal -= item.getQuantity() * item.getUnitPrice();
                 break;
             }
         }

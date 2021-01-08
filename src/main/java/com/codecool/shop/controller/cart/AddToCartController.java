@@ -45,6 +45,8 @@ public class AddToCartController extends HttpServlet {
 
         cart.addToCart(lineItem);
 
+        cartDataStore.update(cart);
+
         resp.sendRedirect(req.getContextPath() + "/");
     }
 }

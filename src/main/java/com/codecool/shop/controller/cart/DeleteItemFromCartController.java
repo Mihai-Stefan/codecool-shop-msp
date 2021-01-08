@@ -33,6 +33,8 @@ public class DeleteItemFromCartController extends HttpServlet {
             cart.removeFromCart(Integer.parseInt(itemId));
         } catch (NumberFormatException ignored){}
 
+        cartDataStore.update(cart);
+
         resp.sendRedirect(req.getContextPath() + "/review-cart");
     }
 }

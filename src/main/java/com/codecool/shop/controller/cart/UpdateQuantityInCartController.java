@@ -39,6 +39,8 @@ public class UpdateQuantityInCartController extends HttpServlet {
             cart.updateItem(Integer.parseInt(lineItemId), Integer.parseInt(newQuantity));
         } catch (NumberFormatException ignored) {}
 
+        cartDataStore.update(cart);
+
         resp.sendRedirect(req.getContextPath() + "/review-cart");
     }
 }
