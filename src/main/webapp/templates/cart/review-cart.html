@@ -26,6 +26,8 @@
     <!-- End of Bootstrap components -->
 
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+
 </head>
 
 <body>
@@ -41,7 +43,7 @@
         <div class="col-md-2 d-flex align-items-center">
             <form action="update-quantity" method="POST" class="d-flex">
                 <button type="submit" class="btn btn-outline-success mr-3">
-                    <i class="glyphicon glyphicon-refresh"></i>
+                    <i class="fas fa-redo-alt"></i>
                 </button>
                 <input type="number" min="1" max="10" class="form-control" name="new-quantity" th:attr="value=${item.getQuantity()}">
                 <input type="hidden" name="item-id" th:attr="value=${item.getId()}">
@@ -54,7 +56,7 @@
             <form action="delete-item" method="POST">
                 <input type="hidden" name="item-id" th:attr="value=${item.getId()}">
                 <button type="submit" class="btn btn-outline-danger">
-                    <i class="glyphicon glyphicon-trash"></i>
+                    <i class="fas fa-trash-alt"></i>
                 </button>
             </form>
         </div>

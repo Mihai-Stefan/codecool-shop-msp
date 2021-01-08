@@ -36,16 +36,16 @@
     <div class="row">
         <form action="/" method="post" class="form-inline m-3">
 
-            <select id="category-id" name="category-id" class="form-control custom-select custom-select-sm mr-3 text-secondary font-weight-bold">
-                <option class="text-muted" selected disabled th:text="${category}"></option>
+            <select id="category-id" name="category-id" class="form-control custom-select custom-select-sm mr-3 font-weight-bold">
+                <option class="text-muted" selected disabled th:text="'(' + ${category} + ')'"></option>
                 <option value="0">All Categories</option>
                 <option th:each="categ : ${categories}"
                         th:value="${categ.id}"
                         th:utext="${categ.name}">
             </select>
 
-            <select id="supplier-id" name="supplier-id" class="form-control custom-select custom-select-sm mr-3 text-secondary font-weight-bold">
-                <option selected disabled th:text="${supplier}"></option>
+            <select id="supplier-id" name="supplier-id" class="form-control custom-select custom-select-sm mr-3 font-weight-bold">
+                <option class="text-muted" selected disabled th:text="'(' + ${supplier} + ')'"></option>
                 <option value="0">All Suppliers</option>
                 <option th:each="suppl : ${suppliers}"
                         th:value="${suppl.id}"
@@ -55,10 +55,6 @@
             <button type="submit" class="btn btn-primary btn-sm font-weight-bold">Filter</button>
         </form>
     </div>
-
-<!--    <div class="row text-muted">-->
-<!--        <strong th:text="'> ' + ${category} + ' > ' + ${supplier}"></strong>-->
-<!--    </div>-->
 
     <div id="products" class="row">
         <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
