@@ -1,9 +1,8 @@
 package com.codecool.shop.config;
 
+import com.codecool.shop.model.*;
 import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.implementation.*;
-import com.codecool.shop.model.*;
-
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
@@ -54,8 +53,6 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("iPad Pro", 800, "USD", "Apple tablet", tablet, apple));
         productDataStore.add(new Product("MacBook Pro", 1500, "USD", "Apple M1 Chip with 8-Core CPU and 8-Core GPU\n" +
                 "512GB Storage", laptop, apple));
-
-
 
         // setting up a new user
         userDataStore.add(new User("Sphinx", "ruptilian@codecool.com", "ruptix2021"));
