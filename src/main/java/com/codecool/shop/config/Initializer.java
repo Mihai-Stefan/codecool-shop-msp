@@ -2,10 +2,7 @@ package com.codecool.shop.config;
 
 import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.implementation.*;
-import com.codecool.shop.model.Product;
-import com.codecool.shop.model.ProductCategory;
-import com.codecool.shop.model.Supplier;
-import com.codecool.shop.model.User;
+import com.codecool.shop.model.*;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -40,7 +37,6 @@ public class Initializer implements ServletContextListener {
         productCategoryDataStore.add(laptop);
         ProductCategory tv = new ProductCategory("TV Set", "Home Entertainment", "A TV Set, is a device that combines a tuner, display, and loudspeakers, for the purpose of viewing and hearing television.");
         productCategoryDataStore.add(tv);
-
 
         //setting up products and printing it
         productDataStore.add(new Product("Amazon Fire", 49.9f, "USD", "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.", tablet, amazon));

@@ -1,6 +1,5 @@
 package com.codecool.shop.model.cart;
 
-import com.codecool.shop.model.Product;
 import com.codecool.shop.model.User;
 
 import java.util.ArrayList;

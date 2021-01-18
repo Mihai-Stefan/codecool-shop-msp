@@ -10,7 +10,6 @@ import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.UserDaoMem;
 import com.codecool.shop.model.User;
 import com.codecool.shop.model.cart.Cart;
-import com.codecool.shop.model.cart.CartStatus;
 import com.codecool.shop.model.cart.LineItem;
 
 import javax.servlet.ServletException;

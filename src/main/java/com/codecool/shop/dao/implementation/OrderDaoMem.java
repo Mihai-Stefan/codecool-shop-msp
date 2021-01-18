@@ -2,8 +2,6 @@ package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.model.User;
-import com.codecool.shop.model.cart.Cart;
-import com.codecool.shop.model.cart.CartStatus;
 import com.codecool.shop.model.order.Order;
 import com.codecool.shop.model.order.OrderStatus;
 

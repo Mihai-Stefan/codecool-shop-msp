@@ -1,7 +1,6 @@
 package com.codecool.shop.model.cart;
 
 import com.codecool.shop.model.Product;
-import com.codecool.shop.model.cart.Cart;
 
 import java.util.Currency;
 
