@@ -13,7 +13,6 @@ import com.codecool.shop.model.User;
 import com.codecool.shop.model.cart.Cart;
 import com.codecool.shop.model.order.Address;
 import com.codecool.shop.model.order.Order;
-import com.paypal.api.payments.Template;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
