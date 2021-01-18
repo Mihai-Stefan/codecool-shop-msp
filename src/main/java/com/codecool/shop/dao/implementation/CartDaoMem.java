@@ -34,7 +34,7 @@ public class CartDaoMem implements CartDao {
     @Override
     public void update(Cart cart) {
         for (int i = 0; i < data.size(); i++) {
-            if (data.get(i).equals(cart)) {
+            if (data.get(i).getId()== cart.getId()) {
                 data.set(i, cart);
                 break;
             }
