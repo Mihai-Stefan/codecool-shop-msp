@@ -72,5 +72,13 @@
             <artifactId>thymeleaf</artifactId>
             <version>${version.thymeleaf}</version>
         </dependency>
+<<<<<<< HEAD
+=======
+        <dependency>
+            <groupId>com.paypal.sdk</groupId>
+            <artifactId>rest-api-sdk</artifactId>
+            <version>1.14.0</version>
+        </dependency>
+>>>>>>> project-a/development
     </dependencies>
 </project>

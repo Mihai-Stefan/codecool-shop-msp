@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Codecool" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>PayPal</title>
+
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="http://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+<body>
+
+<form action="/payment/card" method="post">
+    <div class="container mt-5">
+        <div class="row mt-5">
+            <div class="col-md-4"></div>
+            <div class="shadow-sm col-md-4 border border-light p-5">
+                <div class="row mb-3">
+                    <div class="col-md-12 d-flex justify-content-center">
+                        <img class="img-fluid" src="/static/img/paypal.png" alt="PayPal Logo">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-12 d-flex justify-content-center">
+                        <h6 class="text-muted text-center">With a PayPal account, you're eligible for free return shipping. Purchase Protection, and more.</h6>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <input type="email" class="form-control" name="username" placeholder="Email used on PayPal" required>
+                        <div class="invalid-feedback">
+                            Must type your username
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="password" class="form-control" name="password" placeholder="Password of PayPal Account" required>
+                        <div class="invalid-feedback">
+                            Must type your password
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <button class="btn btn-primary btn-lg btn-block font-weight-bold" type="submit" th:text="'LOG IN AND PAY ' + ${cart.getSubtotal()} + ' ' + ${cart.getCurrency()}"></button>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+</form>
+
+</body>
+</html>

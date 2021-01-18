@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Codecool" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Favorites</title>
+
+    <!-- Bootstrap components -->
+    <!-- Latest compiled and minified Jquery -->
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="http://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- End of Bootstrap components -->
+
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+
+</head>
+<body>
+<div th:replace="navbar.html :: copy"></div>
+
+<div class = "container mt-5" th:each="product,iterStat : ${favorites.getFavoriteProducts()}">
+    <div class="row border-bottom border-light p-2">
+        <div class="col-md-3">
+            <img class="" width="150" src="http://placehold.it/400x250/000/fff" th:attr="src='/static/img/product_' + ${product.getId()} + '.jpg'" alt="" />
+        </div>
+        <div class="col-md-6 d-flex align-items-center" th:text="${product.getName()}"></div>
+        <div class="col-md-2 d-flex justify-content-end align-items-center" th:text="${product.getPrice()}">
+        </div>
+        <div class="col-md-1 d-flex align-items-center">
+            <form action="delete-item" method="POST">
+                <input type="hidden" name="item-id" th:attr="value=${product.getId()}">
+                <button type="submit" class="btn btn-outline-danger">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+                <a class="btn btn-success d-flex justify-content-center mt-5" href="/">Go back to shop</a>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="footer.html :: copy"></div>
+</body>
+</html>

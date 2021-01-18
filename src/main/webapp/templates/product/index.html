@@ -9,6 +9,7 @@
 
     <!-- Bootstrap components -->
     <!-- Latest compiled and minified Jquery -->
+<<<<<<< HEAD
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
@@ -22,6 +23,21 @@
 
     <!-- Latest compiled and minified CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+=======
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <!--Latest compiled and minified Popper -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link href="http://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+>>>>>>> project-a/development
           integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <!-- End of Bootstrap components -->
 
@@ -30,6 +46,7 @@
 
 <body>
 
+<<<<<<< HEAD
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
 </div>
@@ -37,6 +54,32 @@
 <div class="container">
     <div class="card">
         <strong th:text="${category.name}">Category Title</strong>
+=======
+<div th:replace="navbar.html :: copy"></div>
+
+<div class="container mb-2">
+    <div class="row">
+        <form action="/" method="post" class="form-inline m-3">
+
+            <select id="category-id" name="category-id" class="form-control custom-select custom-select-sm mr-3 font-weight-bold">
+                <option class="text-muted" selected disabled th:text="'(' + ${category} + ')'"></option>
+                <option value="0">All Categories</option>
+                <option th:each="categ : ${categories}"
+                        th:value="${categ.id}"
+                        th:utext="${categ.name}">
+            </select>
+
+            <select id="supplier-id" name="supplier-id" class="form-control custom-select custom-select-sm mr-3 font-weight-bold">
+                <option class="text-muted" selected disabled th:text="'(' + ${supplier} + ')'"></option>
+                <option value="0">All Suppliers</option>
+                <option th:each="suppl : ${suppliers}"
+                        th:value="${suppl.id}"
+                        th:utext="${suppl.name}">
+            </select>
+
+            <button type="submit" class="btn btn-primary btn-sm font-weight-bold">Filter</button>
+        </form>
+>>>>>>> project-a/development
     </div>
 
     <div id="products" class="row">
@@ -52,7 +95,15 @@
                         <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                     </div>
                     <div class="card-text">
+<<<<<<< HEAD
                         <a class="btn btn-success" href="#">Add to cart</a>
+=======
+                        <a class="btn btn-success" th:href="'/add-to-cart?productId=' + ${prod.id}">Add to cart</a>
+                        <form action="/favorites" method="POST">
+                            <input name="addToFavorites" type="hidden" th:value="${prod.id}">
+                            <input type="submit" class="btn btn-warning" value="Add to favorites">
+                        </form>
+>>>>>>> project-a/development
                     </div>
                 </div>
             </div>
@@ -60,7 +111,10 @@
     </div>
 
 </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> project-a/development
 <div th:replace="footer.html :: copy"></div>
 
 </body>
