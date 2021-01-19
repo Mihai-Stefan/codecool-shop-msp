@@ -30,7 +30,9 @@ class ProductDaoTest {
 //        assertion
         List<Product> expectedValue = new ArrayList<>();
         expectedValue.add(productTest);
+        System.out.println(expectedValue);
         List<Product> actualValue = productDao.getAll();
+        System.out.println(actualValue);
 
         assertEquals(expectedValue, actualValue);
 
@@ -51,14 +53,28 @@ class ProductDaoTest {
 
     int productId = productTest.getId();
     Product actualValue = productDao.find(productId);
-    Product expectedValue = productDao.getData().get(0);
+    Product expectedValue = productDao.getAll().get(0);
     assertEquals(expectedValue, actualValue);
 
     productDao.remove(productTest.getId());
     }
 
     @Test
-    void remove() {
+    void testRemoveProductMethodSuccess() {
+        ProductDao productDao = ProductDaoMem.getInstance();
+        var apple = new Supplier("Apple Computers", "Smartphones, laptops and computers");
+        var laptop = new ProductCategory("Laptop", "Hardware", "A laptop or laptop computer, is a small, portable personal computer (PC) with a \"clamshell\" form factor.");
+        var productTest = new Product("MacBook Pro", 1500, "USD", "Apple M1 Chip with 8-Core CPU and 8-Core GPU\n" +
+                "512GB Storage", laptop, apple);
+        productDao.add(productTest);
+        int productId = productTest.getId();
+
+        productDao.remove(productId);
+
+        List<Product> expectedValue = new ArrayList<>();
+        List<Product> actualValue = productDao.getAll();
+
+        assertEquals(expectedValue, actualValue);
     }
 
     @Test
