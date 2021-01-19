@@ -75,6 +75,8 @@ class ProductDaoTest {
         List<Product> actualValue = productDao.getAll();
 
         assertEquals(expectedValue, actualValue);
+
+        productDao.remove(productTest.getId());
     }
 
     @Test
