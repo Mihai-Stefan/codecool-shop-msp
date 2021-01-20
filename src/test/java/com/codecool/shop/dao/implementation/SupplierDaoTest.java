@@ -67,6 +67,18 @@ class SupplierDaoTest {
     }
 
     @Test
-    void getAll() {
+    void testGetAllSuppliersMethodSuccess() {
+        SupplierDao supplierDao = SupplierDaoMem.getInstance();
+        Supplier amazon = new Supplier("Amazon", "Digital content and services");
+
+        supplierDao.add(amazon);
+
+        List<Supplier> expectedValue = supplierDao.getAll();
+        List<Supplier> actualValue = new ArrayList<>();
+        actualValue.add(amazon);
+
+        assertEquals(expectedValue, actualValue);
+
+        supplierDao.remove(amazon.getId());
     }
 }
