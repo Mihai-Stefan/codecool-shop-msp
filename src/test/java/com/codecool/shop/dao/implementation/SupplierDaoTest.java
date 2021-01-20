@@ -1,6 +1,7 @@
 package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +32,21 @@ class SupplierDaoTest {
     }
 
     @Test
-    void find() {
+    void testFindSupplierMethodSuccess() {
+        SupplierDao supplierDao = SupplierDaoMem.getInstance();
+        Supplier amazon = new Supplier("Amazon", "Digital content and services");
+
+        supplierDao.add(amazon);
+
+        List<Supplier> expectedSuppliersList = new ArrayList<>();
+        expectedSuppliersList.add(amazon);
+        Supplier expectedValue = supplierDao.getAll().get(0);
+        int supplierId = amazon.getId();
+        Supplier actualValue = supplierDao.find(supplierId);
+
+        assertEquals(expectedValue, actualValue);
+
+        supplierDao.remove(amazon.getId());
     }
 
     @Test
