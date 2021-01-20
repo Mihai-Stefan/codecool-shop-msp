@@ -2,6 +2,7 @@ package com.codecool.shop.dao.implementation;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.model.ProductCategory;
+import com.sun.jdi.Value;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -71,9 +72,9 @@ class ProductCategoryDaoTest {
 
         categoryDao.add(smartphone);
 
-        List<ProductCategory> expectedValue = new ArrayList<>();
-        expectedValue.add(smartphone);
-        List<ProductCategory> actualValue = categoryDao.getAll();
+        List<ProductCategory> expectedValue = categoryDao.getAll();
+        List<ProductCategory> actualValue = new ArrayList<>();
+        actualValue.add(smartphone);
 
         assertEquals(expectedValue, actualValue);
 
