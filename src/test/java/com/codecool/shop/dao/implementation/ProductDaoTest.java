@@ -92,9 +92,9 @@ class ProductDaoTest {
 
         productDao.add(productTest);
 
-        List<Product> expectedValue = new ArrayList<>();
-        expectedValue.add(productTest);
-        List<Product> actualValue = productDao.getAll();
+        List<Product> expectedValue = productDao.getAll();
+        List<Product> actualValue = new ArrayList<>();
+        actualValue.add(productTest);
 
         assertEquals(expectedValue, actualValue);
 
