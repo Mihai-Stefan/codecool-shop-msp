@@ -4,10 +4,8 @@ import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.LineItemDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.UserDao;
-import com.codecool.shop.dao.implementation.CartDaoMem;
-import com.codecool.shop.dao.implementation.LineItemDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.UserDaoMem;
+import com.codecool.shop.dao.db.*;
+import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.model.User;
 import com.codecool.shop.model.cart.Cart;
 import com.codecool.shop.model.cart.LineItem;
@@ -18,23 +16,49 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet(urlPatterns = {"/add-to-cart"})
 
 public class AddToCartController extends HttpServlet {
 
+    String dataStoreType = "db";
+
+    ProductDao productDataStore;
+    CartDao cartDataStore;
+    LineItemDao lineItemDataStore;
+    UserDao userDataStore;
+
+    User user;
+
+    public void init() {
+        switch (dataStoreType) {
+            case "mem":
+                productDataStore = ProductDaoMem.getInstance();
+                cartDataStore = CartDaoMem.getInstance();
+                lineItemDataStore = LineItemDaoMem.getInstance();
+                userDataStore = UserDaoMem.getInstance();
+                break;
+            case "db":
+                try {
+                    productDataStore = ProductDaoJdbc.getInstance();
+                    cartDataStore = CartDaoJdbc.getInstance();
+                    lineItemDataStore = LineItemDaoJdbc.getInstance();
+                    userDataStore = UserDaoJdbc.getInstance();
+                } catch (SQLException throwable) {
+                    throwable.printStackTrace();
+                }
+                break;
+        }
+        user = userDataStore.find(1);
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         int productId = Integer.parseInt(req.getParameter("productId"));
 
-        CartDao cartDataStore = CartDaoMem.getInstance();
-        LineItemDao lineItemDataStore = LineItemDaoMem.getInstance();
-        UserDao userDataStore = UserDaoMem.getInstance();
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-
-        User user = userDataStore.find(1);
         Cart cart = cartDataStore.getActiveCartForUser(user);
         LineItem lineItem = lineItemDataStore.getByCartAndProduct(cart, productDataStore.find(productId));
 

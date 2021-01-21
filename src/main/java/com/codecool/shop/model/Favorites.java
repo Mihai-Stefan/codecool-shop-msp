@@ -5,15 +5,20 @@ import java.util.List;
 
 public class Favorites {
 
-    private List<Product> favoriteProducts;
-    private User user;
-
     private int id;
+    private final User user;
+    private final List<Product> favoriteProducts;
 
     public Favorites(User user) {
-        this.favoriteProducts = new ArrayList<>();
-        this.user = user;
         this.id = -1;
+        this.user = user;
+        this.favoriteProducts = new ArrayList<>();
+    }
+
+    public Favorites(int id, User user) {
+        this.id = id;
+        this.user = user;
+        this.favoriteProducts = new ArrayList<>();
     }
 
     public void addToFavorites(Product product) {

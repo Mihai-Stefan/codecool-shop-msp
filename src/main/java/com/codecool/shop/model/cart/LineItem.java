@@ -8,15 +8,18 @@ public class LineItem {
     private int id;
     private final Product product;
     private int quantity;
-    private float unitPrice;
-    private Currency currency;
-    private Cart cart;
+    private final Cart cart;
+
+    public LineItem(int id, int quantity, Product product, Cart cart) {
+        this.id = id;
+        this.quantity = quantity;
+        this.product = product;
+        this.cart = cart;
+    }
 
     public LineItem(Product product, Cart cart) {
         this.id = -1;
         this.product = product;
-        this.unitPrice = product.getDefaultPrice();
-        this.currency = product.getDefaultCurrency();
         this.quantity = 1;
         this.cart = cart;
     }
@@ -45,21 +48,22 @@ public class LineItem {
         this.quantity = quantity;
     }
 
-    public float getUnitPrice() {
-        return unitPrice;
-    }
-
-    public void setUnitPrice(float unitPrice) {
-        this.unitPrice = unitPrice;
-    }
-
     public String getPrice() {
-        String price = String.format("%.02f", this.quantity * this.unitPrice);
-        return (price + " " + this.currency);
+        String price = String.format("%.02f", this.quantity * this.product.getDefaultPrice());
+        return (price + " " + this.product.getDefaultCurrency());
     }
 
     public Cart getCart() {
         return cart;
     }
 
+    @Override
+    public String toString() {
+        return "LineItem{" +
+                "id=" + id +
+                ", product=" + product.toString() +
+                ", quantity=" + quantity +
+                ", cart=" + "CEVA" +
+                '}';
+    }
 }

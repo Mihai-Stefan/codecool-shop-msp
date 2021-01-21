@@ -106,7 +106,7 @@
                     </div>
                 </div>
 
-                <button class="btn btn-primary btn-lg btn-block mt-5 font-weight-bold" type="submit" th:text="'PAY ' + ${cart.getSubtotal()} + ' ' + ${cart.getCurrency()}"></button>
+                <button class="btn btn-primary btn-lg btn-block mt-5 font-weight-bold" type="submit" th:text="'PAY ' + ${cart.calculateSubtotal()} + ' ' + ${cart.getCurrency()}"></button>
             </div>
             <div class="col-md-3"></div>
         </div>

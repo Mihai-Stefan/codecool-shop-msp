@@ -10,8 +10,6 @@ public class Cart {
     private int id;
     private final User user;
     private final List<LineItem> items;
-    private int numberOfItems;
-    private float subtotal;
     private Currency currency = Currency.getInstance("USD");
     private CartStatus status;
 
@@ -19,8 +17,6 @@ public class Cart {
         this.id = -1;
         this.user = user;
         this.items = new ArrayList<>();
-        this.numberOfItems = 0;
-        this.subtotal = 0;
         this.status = CartStatus.ACTIVE;
     }
 
@@ -40,12 +36,22 @@ public class Cart {
         return items;
     }
 
-    public int getNumberOfItems() {
+    public int countItems() {
+        int numberOfItems = 0;
+        for (LineItem item: items) {
+            numberOfItems += item.getQuantity();
+        }
         return numberOfItems;
     }
 
-    public String getSubtotal() {
-        return String.format("%.02f", this.subtotal);
+    public String calculateSubtotal() {
+        double subtotal = 0;
+
+        for (LineItem item: items) {
+            subtotal += item.getQuantity() * item.getProduct().getDefaultPrice();
+        }
+
+        return String.format("%.02f", subtotal);
     }
 
     public Currency getCurrency() {
@@ -81,9 +87,6 @@ public class Cart {
             targetItem = itemToAdd;
             this.items.add(targetItem);
         }
-
-        this.numberOfItems++;
-        this.subtotal += targetItem.getUnitPrice();
     }
 
     public void updateItem(int itemId, int newQuantity) {
@@ -94,12 +97,8 @@ public class Cart {
                 int oldQuantity = item.getQuantity();
 
                 if (newQuantity > 0) {
-                    this.numberOfItems += newQuantity - oldQuantity;
-                    this.subtotal += (newQuantity - oldQuantity) * item.getUnitPrice();
                     item.setQuantity(newQuantity);
                 } else {
-                    this.numberOfItems -= oldQuantity;
-                    this.subtotal -= oldQuantity * item.getUnitPrice();
                     this.items.remove(item);
                 }
 
@@ -112,10 +111,19 @@ public class Cart {
         for (LineItem item: this.items) {
             if (item.getId() == itemId) {
                 this.items.remove(item);
-                this.numberOfItems -= item.getQuantity();
-                this.subtotal -= item.getQuantity() * item.getUnitPrice();
                 break;
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", user=" + user.toString() +
+                ", items=" + items.size() +
+                ", currency=" + currency.toString() +
+                ", status=" + status.toString() +
+                '}';
     }
 }

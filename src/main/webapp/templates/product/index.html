@@ -32,6 +32,13 @@
 
 <div th:replace="navbar.html :: copy"></div>
 
+<div style="background: #428bca; padding: 10px">
+    <a class="btn btn-secondary" href="/register">Register</a>
+    <a class="btn btn-secondary" href="/login">Login</a>
+    <a class="btn btn-secondary" href="/logout">Logout</a>
+    <p  th:if="${user != null}">You are logged as: [[${user}]]</p>
+</div>
+
 <div class="container mb-2">
     <div class="row">
         <form action="/" method="post" class="form-inline m-3">
@@ -81,7 +88,7 @@
     </div>
 
 </div>
-<div th:replace="footer.html :: copy"></div>
+<!--<div th:replace="footer.html :: copy"></div>-->
 
 </body>
 </html>

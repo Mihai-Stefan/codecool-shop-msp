@@ -8,7 +8,7 @@ public class Address {
     private String lastName;
     private String email;
     private String address;
-    private User user;
+    private final User user;
     private String country;
     private String city;
     private String zipCode;
@@ -103,4 +103,7 @@ public class Address {
         this.phoneNumber = phoneNumber;
     }
 
+    public User getUser() {
+        return user;
+    }
 }

@@ -20,6 +20,15 @@ public class Order {
       this.orderStatus = OrderStatus.PENDING_PAYMENT;
    }
 
+   public Order(int id, Cart cart, User user, Address billingAddress, Address shippingAddress, OrderStatus status) {
+      this.id = id;
+      this.cart = cart;
+      this.user = user;
+      this.billingAddress = billingAddress;
+      this.shippingAddress = shippingAddress;
+      this.orderStatus = status;
+   }
+
    public int getId() {
       return id;
    }

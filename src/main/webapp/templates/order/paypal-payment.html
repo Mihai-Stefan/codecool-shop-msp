@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <div class="row mt-4">
-                    <button class="btn btn-primary btn-lg btn-block font-weight-bold" type="submit" th:text="'LOG IN AND PAY ' + ${cart.getSubtotal()} + ' ' + ${cart.getCurrency()}"></button>
+                    <button class="btn btn-primary btn-lg btn-block font-weight-bold" type="submit" th:text="'LOG IN AND PAY ' + ${cart.calculateSubtotal()} + ' ' + ${cart.getCurrency()}"></button>
                 </div>
             </div>
             <div class="col-md-4"></div>

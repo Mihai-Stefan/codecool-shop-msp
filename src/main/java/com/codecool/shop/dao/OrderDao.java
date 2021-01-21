@@ -10,6 +10,7 @@ public interface OrderDao {
     void add(Order order);
     Order find(int id);
     void remove(int id);
+    void update(Order order);
     Order getActiveOrderForUser(User user);
     List<Order> getBy(User user);
 

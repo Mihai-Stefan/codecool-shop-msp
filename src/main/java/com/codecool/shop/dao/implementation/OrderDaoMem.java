@@ -41,6 +41,16 @@ public class OrderDaoMem implements OrderDao {
         data.remove(find(id));
     }
 
+    @Override
+    public void update(Order order) {
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getId()== order.getId()) {
+                data.set(i, order);
+                break;
+            }
+        }
+    }
+
 
     @Override
     public List<Order> getBy(User user) {

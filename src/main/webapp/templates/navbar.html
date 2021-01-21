@@ -19,7 +19,7 @@
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link text-white font-weight-bold" href="/review-cart">
-                        <div th:class="${cart.getNumberOfItems() != 0}?'bg-primary rounded-circle text-center'" th:text="${cart.getNumberOfItems() != 0}? ${cart.getNumberOfItems()} : '' "  style="width: 25px"></div>
+                        <div th:class="${cart.countItems() != 0}?'bg-primary rounded-circle text-center'" th:text="${cart.countItems() != 0}? ${cart.countItems()} : '' " style="width: 25px"></div>
                     </a>
                 </li>
             </ul>

@@ -5,6 +5,10 @@ import com.codecool.shop.dao.AddressDao;
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.dao.UserDao;
+import com.codecool.shop.dao.db.AddressDaoJdbc;
+import com.codecool.shop.dao.db.CartDaoJdbc;
+import com.codecool.shop.dao.db.OrderDaoJdbc;
+import com.codecool.shop.dao.db.UserDaoJdbc;
 import com.codecool.shop.dao.implementation.AddressDaoMem;
 import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.OrderDaoMem;
@@ -22,16 +26,45 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.rmi.ServerException;
+import java.sql.SQLException;
 
 @WebServlet(urlPatterns = {"/billing-details"})
 public class BillingDetailsController extends HttpServlet {
 
+    String dataStoreType = "db";
+
+    CartDao cartDataStore;
+    UserDao userDataStore;
+    AddressDao addressDataStore;
+    OrderDao orderDataStore;
+
+    User user;
+
+    public void init() {
+        switch (dataStoreType) {
+            case "mem":
+                cartDataStore = CartDaoMem.getInstance();
+                userDataStore = UserDaoMem.getInstance();
+                addressDataStore = AddressDaoMem.getInstance();
+                orderDataStore = OrderDaoMem.getInstance();
+                break;
+            case "db":
+                try {
+                    cartDataStore = CartDaoJdbc.getInstance();
+                    userDataStore = UserDaoJdbc.getInstance();
+                    addressDataStore = AddressDaoJdbc.getInstance();
+                    orderDataStore = OrderDaoJdbc.getInstance();
+                } catch (SQLException throwable) {
+                    throwable.printStackTrace();
+                }
+                break;
+        }
+        user = userDataStore.find(1);
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServerException, IOException {
-        CartDao cartDataStore = CartDaoMem.getInstance();
-        UserDao userDataStore = UserDaoMem.getInstance();
 
-        User user = userDataStore.find(1);
         Cart cart = cartDataStore.getActiveCartForUser(user);
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
@@ -44,12 +77,6 @@ public class BillingDetailsController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServerException, IOException {
 
-        UserDao userDataStore = UserDaoMem.getInstance();
-        CartDao cartDataStore = CartDaoMem.getInstance();
-        AddressDao addressDataStore = AddressDaoMem.getInstance();
-        OrderDao orderDataStore = OrderDaoMem.getInstance();
-
-        User user = userDataStore.find(1);
         Cart cart = cartDataStore.getActiveCartForUser(user);
 
         String bFirstName    = req.getParameter("firstName");

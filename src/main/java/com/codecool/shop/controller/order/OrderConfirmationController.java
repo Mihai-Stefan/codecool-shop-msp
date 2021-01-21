@@ -34,8 +34,8 @@ public class OrderConfirmationController extends HttpServlet {
         CartDao cartDataStore = CartDaoMem.getInstance();
 
         User user = userDataStore.find(1);
-        Order order = orderDataStore.getActiveOrderForUser(user);
-        Cart cart = cartDataStore.getActiveCartForUser(user);
+        Order order = orderDataStore.getActiveOrderForUser(user); // TO DO
+        Cart cart = cartDataStore.getActiveCartForUser(user); // TO DO
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
