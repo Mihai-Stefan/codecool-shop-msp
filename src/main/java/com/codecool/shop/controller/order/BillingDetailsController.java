@@ -24,6 +24,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.rmi.ServerException;
 import java.sql.SQLException;
@@ -59,11 +60,18 @@ public class BillingDetailsController extends HttpServlet {
                 }
                 break;
         }
-        user = userDataStore.find(1);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServerException, IOException {
+
+        HttpSession session = req.getSession();
+
+        if ( null == session.getAttribute("user") ) {
+            resp.sendRedirect(req.getContextPath() + "/login");
+        }
+
+        user = (User) session.getAttribute("user");
 
         Cart cart = cartDataStore.getActiveCartForUser(user);
 
@@ -77,7 +85,15 @@ public class BillingDetailsController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServerException, IOException {
 
-        Cart cart = cartDataStore.getActiveCartForUser(user);
+        HttpSession session = req.getSession();
+
+        if ( null == session.getAttribute("user") ) {
+            resp.sendRedirect(req.getContextPath() + "/login");
+        }
+
+        user = (User) session.getAttribute("user");
+
+        Cart cart = cartDataStore.find((Integer) session.getAttribute("cart_id"));
 
         String bFirstName    = req.getParameter("firstName");
         String bLastName     = req.getParameter("lastName");
@@ -108,6 +124,8 @@ public class BillingDetailsController extends HttpServlet {
         Order order = new Order(cart, user, billingAddress, shippingAddress);
 
         orderDataStore.add(order);
+
+        session.setAttribute("order_id", order.getId());
 
         if (paymentMethod.equals("pay-by-card")) {
             resp.sendRedirect(req.getContextPath() + "/payment/card");

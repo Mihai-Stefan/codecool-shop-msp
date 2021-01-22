@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -51,22 +52,33 @@ public class AddToCartController extends HttpServlet {
                 }
                 break;
         }
-        user = userDataStore.find(1);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        HttpSession session = req.getSession();
+
+        if ( null == session.getAttribute("user") ) {
+            resp.sendRedirect(req.getContextPath() + "/login");
+        }
+
+        user = (User) session.getAttribute("user");
+
         int productId = Integer.parseInt(req.getParameter("productId"));
 
-        Cart cart = cartDataStore.getActiveCartForUser(user);
+        Cart cart = cartDataStore.find((Integer) session.getAttribute("cart_id"));
         LineItem lineItem = lineItemDataStore.getByCartAndProduct(cart, productDataStore.find(productId));
 
         // Add method adds the object to data store if it is not already there (if object is not stored, id == -1)
-        cartDataStore.add(cart);
-        lineItemDataStore.add(lineItem);
+//        cartDataStore.add(cart);
 
-        cart.addToCart(lineItem);
+        if (lineItem.getId() == -1) {
+            lineItemDataStore.add(lineItem);
+            cart.addToCart(lineItem);
+        } else {
+            cart.updateItem(lineItem.getId(), lineItem.getQuantity() + 1);
+        }
 
         cartDataStore.update(cart);
 

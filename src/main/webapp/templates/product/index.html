@@ -32,13 +32,6 @@
 
 <div th:replace="navbar.html :: copy"></div>
 
-<div style="background: #428bca; padding: 10px">
-    <a class="btn btn-secondary" href="/register">Register</a>
-    <a class="btn btn-secondary" href="/login">Login</a>
-    <a class="btn btn-secondary" href="/logout">Logout</a>
-    <p  th:if="${user != null}">You are logged as: [[${user}]]</p>
-</div>
-
 <div class="container mb-2">
     <div class="row">
         <form action="/" method="post" class="form-inline m-3">
@@ -77,10 +70,6 @@
                     </div>
                     <div class="card-text">
                         <a class="btn btn-success" th:href="'/add-to-cart?productId=' + ${prod.id}">Add to cart</a>
-                        <form action="/favorites" method="POST">
-                            <input name="addToFavorites" type="hidden" th:value="${prod.id}">
-                            <input type="submit" class="btn btn-warning" value="Add to favorites">
-                        </form>
                     </div>
                 </div>
             </div>
@@ -88,7 +77,7 @@
     </div>
 
 </div>
-<!--<div th:replace="footer.html :: copy"></div>-->
+<div th:replace="footer.html :: copy"></div>
 
 </body>
 </html>

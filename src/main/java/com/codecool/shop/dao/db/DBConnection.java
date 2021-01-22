@@ -29,9 +29,9 @@ public class DBConnection {
     private DataSource connect() throws SQLException {
 
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
-        String dbName = "webshop";
-        String user = "ccuser"; // my postgres username
-        String password = "test"; // my postgres password
+        String dbName = "codecool-shop";
+        String user = "cristina"; // my postgres username
+        String password = " "; // my postgres password
 
         dataSource.setDatabaseName(dbName);
         dataSource.setUser(user);

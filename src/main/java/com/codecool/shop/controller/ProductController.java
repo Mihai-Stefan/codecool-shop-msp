@@ -6,6 +6,7 @@ import com.codecool.shop.dao.db.*;
 import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.model.User;
+import com.codecool.shop.model.cart.Cart;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -14,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -52,16 +54,26 @@ public class ProductController extends HttpServlet {
                 }
                 break;
         }
-        user = userDataStore.find(1);
+
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        HttpSession session = req.getSession();
+
+        user = (User) session.getAttribute("user");
+
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        context.setVariable("cart", cartDataStore.getActiveCartForUser(user));
+
+        if ( session.getAttribute("user") != null ) {
+            Cart cart = cartDataStore.getActiveCartForUser(user);
+            context.setVariable("cart", cart);
+            session.setAttribute("cart_id", cart.getId());
+        }
+
         context.setVariable("products", productDataStore.getAll());
         context.setVariable("categories", productCategoryDataStore.getAll());
         context.setVariable("suppliers", supplierDataStore.getAll());
@@ -77,19 +89,23 @@ public class ProductController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        HttpSession session = req.getSession();
+
+        user = (User) session.getAttribute("user");
+
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
         context.setVariable("categories", productCategoryDataStore.getAll());
         context.setVariable("suppliers", supplierDataStore.getAll());
 
-        context.setVariable("cart", cartDataStore.getActiveCartForUser(user));
+
+        if ( session.getAttribute("user") != null ) {
+            context.setVariable("cart", cartDataStore.find((Integer) session.getAttribute("cart_id")));
+        }
 
         String categoryId = req.getParameter("category-id");
         String supplierId = req.getParameter("supplier-id");
-
-        System.out.println("Category ID from form: " + categoryId);
-        System.out.println("Supplier ID from form: " + supplierId);
 
         int selectedCat = 0;
         int selectedSupl = 0;
@@ -125,9 +141,6 @@ public class ProductController extends HttpServlet {
         else {
             context.setVariable("supplier", supplierDataStore.find(selectedSupl).getName());
         }
-
-        System.out.println("Category ID: " + selectedCat);
-        System.out.println("Supplier ID: " + selectedSupl);
 
         engine.process("product/index.html", context, resp.getWriter());
     }

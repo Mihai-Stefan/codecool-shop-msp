@@ -22,6 +22,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.rmi.ServerException;
 import java.sql.SQLException;
@@ -57,14 +58,21 @@ public class PayPalPaymentController extends HttpServlet {
                 }
                 break;
         }
-        user = userDataStore.find(1);
-        cart = cartDataStore.getActiveCartForUser(user);
-        order = orderDataStore.getActiveOrderForUser(user);
     }
 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServerException, IOException {
+
+        HttpSession session = req.getSession();
+
+        if ( null == session.getAttribute("user") ) {
+            resp.sendRedirect(req.getContextPath() + "/login");
+        }
+
+        user = (User) session.getAttribute("user");
+        cart = cartDataStore.find((Integer) session.getAttribute("cart_id"));
+        order = orderDataStore.find((Integer) session.getAttribute("order_id"));
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
@@ -76,6 +84,15 @@ public class PayPalPaymentController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServerException, IOException {
+
+        HttpSession session = req.getSession();
+
+        user = (User) session.getAttribute("user");
+        int orderId = (Integer) session.getAttribute("order_id");
+
+        cart = cartDataStore.find((Integer) session.getAttribute("cart_id"));
+        order = orderDataStore.find(orderId);
+
         cart.setStatus(CartStatus.ORDERED);
         cartDataStore.update(cart);
         order.setOrderStatus(OrderStatus.PROCESSING);

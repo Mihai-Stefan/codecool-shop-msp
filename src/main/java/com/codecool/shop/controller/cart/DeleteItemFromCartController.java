@@ -20,6 +20,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sound.sampled.Line;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -50,15 +51,23 @@ public class DeleteItemFromCartController extends HttpServlet {
                 }
                 break;
         }
-        user = userDataStore.find(1);
+
     }
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        HttpSession session = req.getSession();
+
+        if ( null == session.getAttribute("user") ) {
+            resp.sendRedirect(req.getContextPath() + "/login");
+        }
+
+        user = (User) session.getAttribute("user");
+
         String itemId = req.getParameter("item-id");
 
-        Cart cart = cartDataStore.getActiveCartForUser(user);
+        Cart cart = cartDataStore.find((Integer) session.getAttribute("cart_id"));
 
         try {
             cart.removeFromCart(Integer.parseInt(itemId));

@@ -7,29 +7,32 @@ import java.util.Properties;
 public class JavaMailUtil {
 
     public static void sendMail(String recipient) throws MessagingException {
-        System.out.println("Prepairing email");
 
-        Properties properties = new Properties();
+        return;
 
-        properties.put("mail.smtp.auth", true);
-        properties.put("mail.smtp.starttls.enable", true);
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", 587);
-
-        String myAccountGmail = "shopteamhmmm@gmail.com";
-        String password = "unudoitrei";
-
-        Session session = Session.getInstance(properties, new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(myAccountGmail, password);
-            }
-        });
-
-        //the message to send
-        Message message = prepareMessage(session, myAccountGmail, recipient);
-
-        Transport.send(message);
-        System.out.println("Message sent successfully");
+//        System.out.println("Prepairing email");
+//
+//        Properties properties = new Properties();
+//
+//        properties.put("mail.smtp.auth", true);
+//        properties.put("mail.smtp.starttls.enable", true);
+//        properties.put("mail.smtp.host", "smtp.gmail.com");
+//        properties.put("mail.smtp.port", 587);
+//
+//        String myAccountGmail = "shopteamhmmm@gmail.com";
+//        String password = "unudoitrei";
+//
+//        Session session = Session.getInstance(properties, new Authenticator() {
+//            protected PasswordAuthentication getPasswordAuthentication() {
+//                return new PasswordAuthentication(myAccountGmail, password);
+//            }
+//        });
+//
+//        //the message to send
+//        Message message = prepareMessage(session, myAccountGmail, recipient);
+//
+//        Transport.send(message);
+//        System.out.println("Message sent successfully");
 
     }
 

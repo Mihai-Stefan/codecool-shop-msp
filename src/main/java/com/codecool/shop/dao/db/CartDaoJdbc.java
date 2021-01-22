@@ -87,7 +87,6 @@ public class CartDaoJdbc implements CartDao {
 
             for (LineItem item: getRemovedItems(itemsInCart, itemsInCartDB)) {
                 LineItemDaoJdbc.getInstance().remove(item.getId());
-                System.out.println("A AJUNS");
             }
 
         } catch (SQLException e) {
@@ -109,7 +108,7 @@ public class CartDaoJdbc implements CartDao {
             }
 
             Cart cart = new Cart(UserDaoJdbc.getInstance().find(resultSet.getInt(1)));
-            cart.setId(resultSet.getInt(1));
+            cart.setId(id);
             cart.setStatus(CartStatus.getStatusForId(resultSet.getInt(2)));
 
             List<LineItem> itemsInCart = LineItemDaoJdbc.getInstance().getByCart(cart);
@@ -146,7 +145,9 @@ public class CartDaoJdbc implements CartDao {
             ResultSet resultSet = statement.executeQuery();
 
             if (!resultSet.next()) {
-                return new Cart(user);
+                Cart newCart = new Cart(user);
+                add(newCart);
+                return newCart;
             }
 
             Cart cart = new Cart(user);

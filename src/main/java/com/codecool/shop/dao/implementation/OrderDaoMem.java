@@ -71,4 +71,10 @@ public class OrderDaoMem implements OrderDao {
 
         return null;
     }
+
+    @Override
+    public Order getProcessingOrderForUser(User user)
+    {
+        return null;
+    }
 }

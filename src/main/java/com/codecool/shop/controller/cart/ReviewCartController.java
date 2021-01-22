@@ -22,6 +22,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -51,14 +52,21 @@ public class ReviewCartController extends HttpServlet {
                 }
                 break;
         }
-        user = userDataStore.find(1);
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        HttpSession session = req.getSession();
+
+        if ( null == session.getAttribute("user") ) {
+            resp.sendRedirect(req.getContextPath() + "/login");
+        }
+
+        user = (User) session.getAttribute("user");
+
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        context.setVariable("cart", cartDataStore.getActiveCartForUser(user));
+        context.setVariable("cart", cartDataStore.find((Integer) session.getAttribute("cart_id")));
 
         engine.process("cart/review-cart.html", context, resp.getWriter());
     }

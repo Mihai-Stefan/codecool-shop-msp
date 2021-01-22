@@ -71,4 +71,16 @@ public class Order {
    public void setOrderStatus(OrderStatus orderStatus) {
       this.orderStatus = orderStatus;
    }
+
+   @Override
+   public String toString() {
+      return "Order{" +
+              "id=" + id +
+              ", cart=" + cart.toString() +
+              ", user=" + user.toString() +
+              ", billingAddress=" + billingAddress.toString() +
+              ", shippingAddress=" + shippingAddress.toString() +
+              ", orderStatus=" + orderStatus.toString() +
+              '}';
+   }
 }

@@ -12,6 +12,7 @@ public interface OrderDao {
     void remove(int id);
     void update(Order order);
     Order getActiveOrderForUser(User user);
+    Order getProcessingOrderForUser(User user);
     List<Order> getBy(User user);
 
 
