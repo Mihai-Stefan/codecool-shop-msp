@@ -75,13 +75,14 @@ public class RegisterController extends HttpServlet {
         if (userDataStore.find(userEmail) == null) {
             userDataStore.add(user);
             resp.sendRedirect("/login");
-//
+
 //            try {
 //                JavaMailUtil.sendMail(userEmail);
 //            } catch (MessagingException e) {
 //                e.printStackTrace();
-
+//
 //            }
+
         } else
             message = "This email is in database\nPlease try another one or Login";
             context.setVariable("usernamePlaceholder", userName);
