@@ -7,6 +7,8 @@ import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.model.User;
 import com.codecool.shop.model.cart.Cart;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -21,6 +23,7 @@ import java.sql.SQLException;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     String dataStoreType = "db";
 
@@ -141,6 +144,11 @@ public class ProductController extends HttpServlet {
         else {
             context.setVariable("supplier", supplierDataStore.find(selectedSupl).getName());
         }
+
+        if (productCategoryDataStore.find(selectedCat)!=null)
+            logger.info("User selected category: {}", productCategoryDataStore.find(selectedCat).getName());
+        if (supplierDataStore.find(selectedSupl)!=null)
+            logger.info("User selected category: {}", supplierDataStore.find(selectedSupl).getName());
 
         engine.process("product/index.html", context, resp.getWriter());
     }

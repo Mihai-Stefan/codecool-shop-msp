@@ -1,5 +1,6 @@
 package com.codecool.shop.controller.cart;
 
+import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.LineItemDao;
 import com.codecool.shop.dao.ProductDao;
@@ -9,6 +10,8 @@ import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.model.User;
 import com.codecool.shop.model.cart.Cart;
 import com.codecool.shop.model.cart.LineItem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,6 +26,7 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/add-to-cart"})
 
 public class AddToCartController extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(AddToCartController.class);
 
     String dataStoreType = "db";
 
@@ -79,6 +83,7 @@ public class AddToCartController extends HttpServlet {
         } else {
             cart.updateItem(lineItem.getId(), lineItem.getQuantity() + 1);
         }
+        logger.info("Product {}  was added cart", productDataStore.find(productId).getName());
 
         cartDataStore.update(cart);
 

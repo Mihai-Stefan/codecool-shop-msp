@@ -1,0 +1,28 @@
+22:58:04 [qtp516913231-31] INFO  c.c.s.c.user.LoginController - User Mihai logged in
+22:58:07 [qtp516913231-39] INFO  c.c.s.c.cart.AddToCartController - Product Lenovo IdeaPad Miix 700  was added cart
+22:58:41 [qtp516913231-31] INFO  c.c.s.c.o.OrderConfirmationController - Order: 7  confirmed
+14:07:22 [qtp59725469-37] INFO  c.c.s.controller.ProductController - User selected category: Tablet
+12:40:41 [qtp389703464-30] INFO  c.c.s.c.user.RegisterController - A new user registered John Doe
+12:40:42 [qtp389703464-30] ERROR c.c.s.c.user.RegisterController - Error trying to send mail
+12:40:57 [qtp389703464-30] INFO  c.c.s.c.user.LoginController - User John Doe logged in
+12:41:09 [qtp389703464-40] INFO  c.c.s.c.user.LogoutController - User logout
+12:44:03 [qtp389703464-30] INFO  c.c.s.c.user.RegisterController - A new user registered Jim Brown
+12:44:03 [qtp389703464-30] ERROR c.c.s.c.user.RegisterController - Error trying to send mail
+12:45:00 [qtp389703464-30] INFO  c.c.s.c.user.LoginController - User Jim Brown logged in
+12:46:00 [qtp389703464-49] INFO  c.c.s.c.cart.AddToCartController - Product Samsung Galaxy Note 20  was added cart
+12:46:25 [qtp389703464-50] INFO  c.c.s.c.cart.AddToCartController - Product Lenovo IdeaPad Miix 700  was added cart
+12:53:31 [qtp389703464-46] INFO  c.c.s.c.o.OrderConfirmationController - Order: 8  confirmed
+12:54:51 [qtp389703464-46] INFO  c.c.s.controller.ProductController - User selected category: TV
+12:55:34 [qtp389703464-46] INFO  c.c.s.controller.ProductController - User selected category: Samsung
+12:56:16 [qtp389703464-46] INFO  c.c.s.controller.ProductController - User selected category: Laptop
+12:56:29 [qtp389703464-46] INFO  c.c.s.controller.ProductController - User selected category: TV
+12:56:29 [qtp389703464-46] INFO  c.c.s.controller.ProductController - User selected category: Samsung
+12:57:34 [qtp389703464-46] INFO  c.c.s.c.user.LogoutController - User logout
+13:04:22 [qtp389703464-30] INFO  c.c.s.c.user.LoginController - User Jim Brown logged in
+13:04:27 [qtp389703464-60] INFO  c.c.s.c.cart.AddToCartController - Product Samsung Galaxy Note 20  was added cart
+13:05:14 [qtp389703464-50] INFO  c.c.s.c.o.OrderConfirmationController - Order: 9  confirmed
+13:06:54 [qtp389703464-33] INFO  c.c.s.c.user.LogoutController - User logout
+14:08:57 [qtp1464502754-33] INFO  c.c.s.c.user.RegisterController - A new user registered Mihai
+14:08:58 [qtp1464502754-33] ERROR c.c.s.c.user.RegisterController - Error trying to send mail
+14:21:36 [qtp1464502754-39] INFO  c.c.s.c.user.RegisterController - A new user registered Mihai
+14:21:38 [qtp1464502754-39] INFO  c.c.s.c.user.RegisterController - Wellcome mail was sent to user Mihai

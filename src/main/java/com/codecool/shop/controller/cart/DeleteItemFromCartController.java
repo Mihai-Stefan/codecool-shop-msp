@@ -1,5 +1,6 @@
 package com.codecool.shop.controller.cart;
 
+import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.LineItemDao;
 import com.codecool.shop.dao.ProductDao;
@@ -14,6 +15,8 @@ import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.dao.implementation.UserDaoMem;
 import com.codecool.shop.model.User;
 import com.codecool.shop.model.cart.Cart;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,6 +31,7 @@ import java.sql.SQLException;
 @WebServlet(urlPatterns = {"/delete-item"})
 
 public class DeleteItemFromCartController extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(DeleteItemFromCartController.class);
 
     String dataStoreType = "db";
 
@@ -72,8 +76,8 @@ public class DeleteItemFromCartController extends HttpServlet {
         try {
             cart.removeFromCart(Integer.parseInt(itemId));
         } catch (NumberFormatException ignored){}
-
-        cartDataStore.update(cart);
+        logger.info("An item was deleted from cart");
+                cartDataStore.update(cart);
 
         resp.sendRedirect(req.getContextPath() + "/review-cart");
     }

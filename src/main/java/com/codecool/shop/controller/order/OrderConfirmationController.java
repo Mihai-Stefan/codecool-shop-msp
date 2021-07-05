@@ -2,6 +2,7 @@ package com.codecool.shop.controller.order;
 
 
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.dao.UserDao;
@@ -14,6 +15,8 @@ import com.codecool.shop.dao.implementation.UserDaoMem;
 import com.codecool.shop.model.User;
 import com.codecool.shop.model.cart.Cart;
 import com.codecool.shop.model.order.Order;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -29,6 +32,7 @@ import java.sql.SQLException;
 @WebServlet(urlPatterns = {"/order-confirmation"})
 
 public class OrderConfirmationController extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(OrderConfirmationController.class);
 
     String dataStoreType = "db";
 
@@ -77,7 +81,9 @@ public class OrderConfirmationController extends HttpServlet {
         context.setVariable("order", order);
         context.setVariable("cart", cart);
 
-        engine.process("order/order-confirmation.html", context, resp.getWriter());
+        logger.info("Order: {}  confirmed", order.getId());
+
+                engine.process("order/order-confirmation.html", context, resp.getWriter());
 
 
     }

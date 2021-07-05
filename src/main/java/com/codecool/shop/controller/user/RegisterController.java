@@ -3,10 +3,13 @@ package com.codecool.shop.controller.user;
 import com.codecool.shop.Utils.JavaMailUtil;
 import com.codecool.shop.Utils.Utils;
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.codecool.shop.controller.ProductController;
 import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.dao.db.*;
 import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -23,6 +26,8 @@ import java.sql.SQLException;
 
 @WebServlet(urlPatterns = {"/register"})
 public class RegisterController extends HttpServlet {
+    private static final Logger logger = LoggerFactory.getLogger(RegisterController.class);
+
     String usernamePlaceholder = "Your name";
     String emailPlaceholder = "Email address";
     String passwordPlaceholder = "Password";
@@ -74,14 +79,17 @@ public class RegisterController extends HttpServlet {
         // verify existing user
         if (userDataStore.find(userEmail) == null) {
             userDataStore.add(user);
+            logger.info("A new user registered {}", userName);
             resp.sendRedirect("/login");
 
-//            try {
-//                JavaMailUtil.sendMail(userEmail);
-//            } catch (MessagingException e) {
-//                e.printStackTrace();
-//
-//            }
+            try {
+                JavaMailUtil.sendMail(userEmail);
+                logger.info("Wellcome mail was sent to user {}", userName);
+            } catch (MessagingException e) {
+                logger.error("Error trying to send mail");
+                e.printStackTrace();
+
+            }
 
         } else
             message = "This email is in database\nPlease try another one or Login";
